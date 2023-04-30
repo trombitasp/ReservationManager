@@ -16,3 +16,6 @@ data class User (
     @OneToOne(mappedBy = "currentReserver")
     var reservedResource: Resource
 ) {}
+
+
+// root: 1234
