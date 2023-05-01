@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "http://localhost:8080/api";
 const PROVIDERS_URL = BASE_URL + '/providers';
 const RESERVATION_URL = BASE_URL + "/reservations";
 const RESOURCES_URL = BASE_URL + "/resources";
