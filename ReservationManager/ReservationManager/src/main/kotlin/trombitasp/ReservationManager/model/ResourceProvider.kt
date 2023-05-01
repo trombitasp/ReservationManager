@@ -9,7 +9,7 @@ import java.util.*
 
 @Entity
 @Table(name = "resourceProviders")
-class ResourceProvider (
+data class ResourceProvider (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

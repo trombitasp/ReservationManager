@@ -42,8 +42,8 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
 
     @DeleteMapping("/resources/{id}")
     fun deleteResourceById(@PathVariable id: Int): ResponseEntity<Void> {
-        return resourceRepository.findById(id).map { article  ->
-            resourceRepository.delete(article)
+        return resourceRepository.findById(id).map { r  ->
+            resourceRepository.delete(r)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
     }
