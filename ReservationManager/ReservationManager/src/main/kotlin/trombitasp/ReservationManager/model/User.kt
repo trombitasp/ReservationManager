@@ -1,20 +1,25 @@
 package trombitasp.ReservationManager.model
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name = "users")
 data class User (
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     var id: Int,
 
+    @Column(name = "name")
+    @NotBlank
     var name: String,
 
-    var role: String = "admin",
+    @Column(name = "role")
+    var role: String = "default",
 
-    @OneToOne(mappedBy = "currentReserver")
-    var reservedResource: Resource
+    @OneToMany(mappedBy = "user")
+    var reservations: List<Reservation> = emptyList()
 ) {}
 
 

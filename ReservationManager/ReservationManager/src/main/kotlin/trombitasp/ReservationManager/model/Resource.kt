@@ -10,23 +10,23 @@ import java.util.*
 class Resource (
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     var id: Int,
 
     @NotBlank
     @Size(min = 2, max = 50)
+    @Column(name = "name")
     var name: String,
+
+    @Column(name = "description")
     var description: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "resourceProvider")
+    @ManyToOne
+    @JoinColumn(name = "resourceProvider_id")
     var resourceProvider: ResourceProvider,
-    var isReserved: Boolean = false,
 
-    var beginningOfReservation: Date,
-    var endOfReservation: Date,
-
-    @OneToOne
-    var currentReserver: User? = null
+    @OneToOne(mappedBy = "resource")
+    var reservation: Reservation,
     //var imageId: Int,
 ) {}

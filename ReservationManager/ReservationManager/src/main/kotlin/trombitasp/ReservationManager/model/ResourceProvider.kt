@@ -10,20 +10,25 @@ import java.util.*
 @Table(name = "resourceProviders")
 class ResourceProvider (
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     var id: Int,
 
     @NotBlank
     @Size(min = 2, max = 50)
+    @Column(name = "name")
     var name: String = "",
 
     @NotEmpty
+    @Column(name = "minReservationTime")
     var minReservationTime: Date = Date(0, 0, 0, 0, 30, 0),
 
     @NotEmpty
+    @Column(name = "maxReservationTime")
     var maxReservationTime: Date = Date(0, 0, 0, 2, 0, 0),
 
     @NotBlank
+    @Column(name = "description")
     var description: String = "",
 
     @OneToMany(mappedBy = "resourceProvider")
