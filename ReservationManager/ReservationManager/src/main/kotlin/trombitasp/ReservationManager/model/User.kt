@@ -22,5 +22,4 @@ data class User (
     var reservations: List<Reservation> = emptyList()
 ) {}
 
-
 // root: 1234
