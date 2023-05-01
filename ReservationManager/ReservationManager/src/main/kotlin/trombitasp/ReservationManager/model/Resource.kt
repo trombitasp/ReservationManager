@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity
 @Table(name = "resources")
-class Resource (
+data class Resource (
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
