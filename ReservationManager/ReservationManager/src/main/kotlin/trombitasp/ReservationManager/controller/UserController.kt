@@ -8,10 +8,10 @@ import trombitasp.ReservationManager.repository.UserRepository
 
 @RestController
 @RequestMapping("/api")
-class UserController(val userRepository: UserRepository) {
+class UserController(private val userRepository: UserRepository) {
 
     @GetMapping("/users")
-    fun findAll() = userRepository.findAll()
+    fun findAllUser() = userRepository.findAll()
 
     @GetMapping("/users/{id}")
     fun findById(@PathVariable id: Int): ResponseEntity<User> {
@@ -21,10 +21,10 @@ class UserController(val userRepository: UserRepository) {
     }
 
     @GetMapping("/users/byname/{name}")
-    fun findAllByName(@PathVariable name: String) = userRepository.findAllByName(name)
+    fun findAllUserByName(@PathVariable name: String) = userRepository.findAllByName(name)
 
     @GetMapping("/users/byrole/{role}")
-    fun findallByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
+    fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
 
     @PostMapping("/users")
     fun saveUser(@RequestBody user: User) = userRepository.save(user)
@@ -37,7 +37,7 @@ class UserController(val userRepository: UserRepository) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @DeleteMapping("/articles/{id}")
+    @DeleteMapping("/users/{id}")
     fun deleteUserById(@PathVariable id: Int): ResponseEntity<Void> {
         return userRepository.findById(id).map { article  ->
             userRepository.delete(article)

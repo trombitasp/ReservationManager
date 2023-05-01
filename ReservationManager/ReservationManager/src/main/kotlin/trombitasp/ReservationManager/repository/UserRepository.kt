@@ -8,5 +8,5 @@ interface UserRepository : JpaRepository<User, Int> {
 
     fun findAllByRole(role: String): List<User>
 
-    // TODO: add API endpoints here for specialized db queries
+    // TODO: add API endpoints here for specialized DB queries
 }
