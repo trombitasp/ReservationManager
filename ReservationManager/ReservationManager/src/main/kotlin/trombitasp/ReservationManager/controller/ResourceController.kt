@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import trombitasp.ReservationManager.model.Resource
-import trombitasp.ReservationManager.model.User
 import trombitasp.ReservationManager.repository.ResourceRepository
 
 @RestController
@@ -24,7 +23,7 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
     fun findAllResourceByName(@PathVariable name: String) = resourceRepository.findAllByName(name)
 
     @GetMapping("/resources/bydescription/{role}")
-    fun findAllResourceByDescription(@PathVariable description: String) = resourceRepository.findAllByDescription(description)
+    fun findAllResourceByDescription(@PathVariable description: String) = resourceRepository.findAllByDescriptionContaining(description)
 
     @PostMapping("/resources")
     fun saveResource(@RequestBody resource: Resource) = resourceRepository.save(resource)

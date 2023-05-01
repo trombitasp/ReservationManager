@@ -14,7 +14,7 @@ class UserController(private val userRepository: UserRepository) {
     fun findAllUser() = userRepository.findAll()
 
     @GetMapping("/users/{id}")
-    fun findById(@PathVariable id: Int): ResponseEntity<User> {
+    fun findUserById(@PathVariable id: Int): ResponseEntity<User> {
         return userRepository.findById(id).map { u ->
             ResponseEntity.ok(u)
         }.orElse(ResponseEntity.notFound().build())
@@ -39,8 +39,8 @@ class UserController(private val userRepository: UserRepository) {
 
     @DeleteMapping("/users/{id}")
     fun deleteUserById(@PathVariable id: Int): ResponseEntity<Void> {
-        return userRepository.findById(id).map { article  ->
-            userRepository.delete(article)
+        return userRepository.findById(id).map { r  ->
+            userRepository.delete(r)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
     }

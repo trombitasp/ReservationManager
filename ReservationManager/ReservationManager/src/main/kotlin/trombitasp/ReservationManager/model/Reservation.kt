@@ -1,5 +1,6 @@
 package trombitasp.ReservationManager.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 import java.util.*
 
@@ -11,10 +12,12 @@ data class Reservation (
     @Column(name = "id")
     var id: Int,
 
+    @JsonBackReference      // TODO: Nem okoz ez problémát, hogy nem kerül szerializálásra ez a property?
     @ManyToOne
     @JoinColumn(name = "user_id")
     var user: User,
 
+    @JsonBackReference      // TODO: Nem okoz ez problémát, hogy nem kerül szerializálásra ez a property?
     @OneToOne
     @JoinColumn(name = "resource_id", referencedColumnName = "id")
     var resource: Resource,

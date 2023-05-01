@@ -1,5 +1,6 @@
 package trombitasp.ReservationManager.model
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
@@ -18,6 +19,7 @@ data class User (
     @Column(name = "role")
     var role: String = "default",
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     var reservations: List<Reservation> = emptyList()
 ) {}
