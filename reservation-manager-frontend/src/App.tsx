@@ -1,15 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-
-
-
-
+class App extends Component {
+  render() {
 
   return (
-    <nav className="navbar navbar-inverse navbar-fixed-top">
+    <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <a href="/tutorials" className="navbar-brand">
+            Foglaláskezelő
+          </a>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/resourceproviders"} className="nav-link">
+                Szolgáltatók
+              </Link>
+            </li>
+			<li className="nav-item">
+              <Link to={"/resources"} className="nav-link">
+                Foglalható dolgok
+              </Link>
+            </li>
+			<li className="nav-item">
+              <Link to={"/reservations"} className="nav-link">
+                Korábbi foglalások
+              </Link>
+            </li>
+			<li className="nav-item">
+              <Link to={"/users"} className="nav-link">
+                Profil adatok / Bejelentkezés
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/add"} className="nav-link">
+                Add
+              </Link>
+            </li>
+          </div>
+        </nav>
+
+      </div>
+
+    /*<nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
             <div className="navbar-header">
                 <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
@@ -30,7 +65,8 @@ function App() {
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav>*/
+	
     /*<div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -48,6 +84,7 @@ function App() {
       </header>
     </div>*/
   );
+  }
 }
 
 export default App;
