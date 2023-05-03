@@ -1,5 +1,5 @@
 import IReservationModel from "./ReservationModel";
-import IResourceProviderModel from "./ResourceProvider";
+import IResourceProviderModel from "./ResourceProviderModel";
 
 export default interface IResourceModel {
     id?: Number | null,

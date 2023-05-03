@@ -22,7 +22,7 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
     @GetMapping("/resources/byname/{name}")
     fun findAllResourceByName(@PathVariable name: String) = resourceRepository.findAllByName(name)
 
-    @GetMapping("/resources/bydescription/{role}")
+    @GetMapping("/resources/bydescription/{description}")
     fun findAllResourceByDescription(@PathVariable description: String) = resourceRepository.findAllByDescriptionContaining(description)
 
     @PostMapping("/resources")

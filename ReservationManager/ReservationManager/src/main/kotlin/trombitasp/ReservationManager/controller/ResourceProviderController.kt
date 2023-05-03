@@ -23,7 +23,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
     @GetMapping("/resourceproviders/byname/{name}")
     fun findAllResourceProviderByName(@PathVariable name: String) = resourceProviderRepository.findAllByName(name)
 
-    @GetMapping("/resourceproviders/bydescription/{role}")
+    @GetMapping("/resourceproviders/bydescription/{description}")
     fun findAllResourceProviderByDescription(@PathVariable description: String) =
         resourceProviderRepository.findAllByDescriptionContaining(description)
 
