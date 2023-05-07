@@ -3,8 +3,8 @@ import IResourceProviderModel from "./ResourceProviderModel";
 
 export default interface IResourceModel {
     id?: Number | null,
-    name: String,
-    description: String,
-    resourceProvider: Array<IResourceProviderModel>,
-    reservation: Array<IReservationModel>
+    name: string,
+    description: string,
+    resourceProvider: Number,       //IResourceProviderModel,
+    reservation: Number             //IReservationModel
 }
