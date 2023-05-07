@@ -2,7 +2,7 @@ import IReservationModel from "./ReservationModel";
 
 export default interface IUserModel {
     id?: Number | null,
-    name: String,
-    role: String,
-    reservations: Array<IReservationModel>
+    name: string,
+    role: string,
+    reservations: Array<Number>      // Array<IReservationModel>, ha nem csak id kell
 }
