@@ -2,9 +2,9 @@ import IResourceModel from "./ResourceModel";
 
 export default interface IResourceProviderModel {
     id?: Number | null,
-    name: String,
+    name: string,
     minReservationTime: Date,
     maxReservationTime: Date,
-    description: String,
-    resources: Array<IResourceModel>
+    description: string,
+    resources: Array<Number>        // Array<IResourceModel>, ha nem id-k kellenek
 }
