@@ -49,7 +49,7 @@ export default class AddUser extends Component<Props, State> {
 		const data: IUserModel = {
 			name: this.state.name,
 			role: this.state.role,
-			reservations: new Array<Number>(),
+			reservations: this.state.reservations,
 		};
 
 		UserDataService.create(data)
@@ -119,7 +119,7 @@ export default class AddUser extends Component<Props, State> {
 
 	
 				<button onClick={this.saveUser} className="btn btn-success">
-				  Submit
+				  Mentés
 				</button>
 			  </div>
 			)}
