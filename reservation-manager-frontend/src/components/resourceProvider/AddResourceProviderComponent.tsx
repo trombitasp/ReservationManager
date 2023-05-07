@@ -36,14 +36,14 @@ export default class AddResourceProvider extends Component<Props, State> {
     }
 
     onChangeMinTime(e: ChangeEvent<HTMLInputElement>) {
-        let [hours, minutes] = e.target.value.split(":")    // input type="time" értékét spliteljük ketté órára és percre
+        let [hours, minutes] = e.target.value.split(":");    // input type="time" értékét spliteljük ketté órára és percre
         this.setState({
             minReservationTime: new Date(2000, 1, 31, +hours, +minutes, 0, 0),
         });
     }
 
     onChangeMaxTime(e: ChangeEvent<HTMLInputElement>) {
-        let [hours, minutes] = e.target.value.split(":")    // input type="time" értékét spliteljük ketté órára és percre
+        let [hours, minutes] = e.target.value.split(":");    // input type="time" értékét spliteljük ketté órára és percre
         this.setState({
             maxReservationTime: new Date(2000, 1, 31, +hours, +minutes, 0, 0),
         });

@@ -21,7 +21,7 @@ export default class AddUser extends Component<Props, State> {
 			id: null,
 			name: "",
 			role: "default",
-			reservations: new Array<Number>(),	// new Array<IReservationModel>(), ha a teljes reservation-öket eltároljuk id helyett
+			reservations: [],	// new Array<IReservationModel>(), ha a teljes reservation-öket eltároljuk id helyett
 			submitted: false,
 		};
 	}
