@@ -1,6 +1,7 @@
 import { Component, ChangeEvent } from "react";
 import IResourceModel from "../../models/ResourceModel";
 import ResourceDataService from "../../services/ResourceService";
+import IResourceProviderModel from "../../models/ResourceProviderModel";
 
 type Props = {};
 
@@ -20,10 +21,21 @@ export default class AddResource extends Component<Props, State> {
             id: null,
             name: "",
             description: "",
-            resourceProvider: -1,
-            reservation: -1,
+            resourceProvider: this.newResourceProvider(),
+            //reservation: -1,
             submitted: false
         };
+    }
+
+    newResourceProvider() {
+        let temp: IResourceProviderModel = {
+            id: null,
+            name: "",
+            minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
+            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            description: ""
+        };
+        return temp;
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -54,7 +66,7 @@ export default class AddResource extends Component<Props, State> {
             name: this.state.name,
             description: this.state.description,
             resourceProvider: this.state.resourceProvider,
-            reservation: this.state.reservation
+            //reservation: this.state.reservation
         };
 
         ResourceDataService.create(data)
@@ -64,7 +76,7 @@ export default class AddResource extends Component<Props, State> {
                     name: response.data.name,
                     description: response.data.description,
                     resourceProvider: response.data.resourceProvider,
-                    reservation: response.data.reservation,
+                    //reservation: response.data.reservation,
                     submitted: true
                 });
                 console.log(response.data + "created.");
@@ -79,14 +91,14 @@ export default class AddResource extends Component<Props, State> {
             id: null,
             name: "",
             description: "",
-            resourceProvider: -1,
-            reservation: -1,
+            resourceProvider: this.newResourceProvider(),
+            //reservation: -1,
             submitted: false
         });
     }
 
     render() {
-        const { submitted, name,  description, resourceProvider, reservation } = this.state;
+        const { submitted, name,  description } = this.state;
 
         return (
             <div className="submit-form">

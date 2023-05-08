@@ -5,6 +5,6 @@ export default interface IResourceModel {
     id?: Number | null,
     name: string,
     description: string,
-    resourceProvider: Number,       //IResourceProviderModel,
-    reservation: Number             //IReservationModel
+    resourceProvider: IResourceProviderModel,       //IResourceProviderModel,
+    //reservation: Number             //IReservationModel
 }

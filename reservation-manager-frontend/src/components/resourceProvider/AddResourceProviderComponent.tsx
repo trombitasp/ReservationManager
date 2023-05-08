@@ -24,14 +24,14 @@ export default class AddResourceProvider extends Component<Props, State> {
             minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),     // 1 óra, 2000.01.31-et ki kell vonni belőle (mySQL nem tárol kiebbeket)
             maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
             description: "",
-            resources: [],
+            //resources: [],
             submitted: false
         };
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
         this.setState({
-            name: e.target.value,
+            name: e.target.value
         });
     }
 
@@ -66,8 +66,8 @@ export default class AddResourceProvider extends Component<Props, State> {
             name: this.state.name,
             minReservationTime: this.state.minReservationTime,
             maxReservationTime: this.state.maxReservationTime,
-            description: this.state.description,
-            resources: this.state.resources
+            description: this.state.description
+            //resources: this.state.resources
         };
 
         ResourceProviderDataService.create(data)
@@ -78,7 +78,7 @@ export default class AddResourceProvider extends Component<Props, State> {
                     minReservationTime: response.data.minReservationTime,
                     maxReservationTime: response.data.maxReservationTime,
                     description: response.data.description,
-                    resources: response.data.resources,
+                    //resources: response.data.resources,
                     submitted: true
                 });
                 console.log(response.data + "created.");
@@ -95,13 +95,13 @@ export default class AddResourceProvider extends Component<Props, State> {
             minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
             maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
             description: "",
-            resources: [],
+            //resources: [],
             submitted: false
         });
     }
 
     render() {
-        const { submitted, name, minReservationTime, maxReservationTime, description, resources } = this.state;
+        const { submitted, name, minReservationTime, maxReservationTime, description } = this.state;
 
         return (
             <div className="submit-form">

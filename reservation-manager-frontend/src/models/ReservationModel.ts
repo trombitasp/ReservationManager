@@ -3,8 +3,8 @@ import IUserModel from "./UserModel";
 
 export default interface IReservationModel {
     id?: Number | null,
-    user: Number,            //  Array<IUserModel>,
-    resource: Number,        //  Array<IResourceModel>,
+    user: IUserModel,            //  Array<IUserModel>,
+    resource: IResourceModel,        //  Array<IResourceModel>,
     beginningOfReservation: Date,
     endOfReservation: Date,
     description: string

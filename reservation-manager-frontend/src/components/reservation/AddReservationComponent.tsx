@@ -1,6 +1,9 @@
 import { Component, ChangeEvent } from "react";
 import ReservationDataService from "../../services/ReservationService";
 import IReservatonModel from "../../models/ReservationModel";
+import IUserModel from "../../models/UserModel";
+import IResourceModel from "../../models/ResourceModel";
+import IResourceProviderModel from "../../models/ResourceProviderModel";
 
 type Props = {};
 
@@ -19,13 +22,43 @@ export default class AddReservation extends Component<Props, State> {
 
         this.state = {
             id: null,
-            user: -1,
-            resource: -1,
+            user: this.newUser(),
+            resource: this.newResource(),
             beginningOfReservation: new Date(2000, 1, 1, 0, 0, 0, 0),
             endOfReservation: new Date(2000, 1, 1, 0, 0, 1, 0),
             description: "",
             submitted: false,
         };
+    }
+
+    newResource() {
+        let temp: IResourceModel = {
+            id: null,
+            name: "",
+            description: "",
+            resourceProvider: this.newResourceProvider()
+        };
+        return temp;
+    }
+
+    newResourceProvider() {
+        let temp: IResourceProviderModel = {
+            id: null,
+            name: "",
+            minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
+            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            description: ""
+        };
+        return temp;
+    }
+
+    newUser() {
+        let temp: IUserModel = {
+            id: null,
+            name: "",
+            role: "default"
+        };
+        return temp;
     }
 
     onChangeBeginningOfReservation(e: ChangeEvent<HTMLInputElement>) {
@@ -84,8 +117,8 @@ export default class AddReservation extends Component<Props, State> {
     newReservation() {
         this.setState({
             id: null,
-            user: -1,
-            resource: -1,
+            user: this.newUser(),
+            resource: this.newResource(),
             beginningOfReservation: new Date(2023, 1, 31, 1, 0, 0, 0),
             endOfReservation: new Date(2023, 1, 31, 1, 0, 0, 0),
             description: "",
@@ -94,7 +127,7 @@ export default class AddReservation extends Component<Props, State> {
     }
 
     render() {
-        const { submitted, user, resource, beginningOfReservation, endOfReservation, description } = this.state;
+        const { submitted, beginningOfReservation, endOfReservation, description } = this.state;
 
         return (
             <div className="submit-form">

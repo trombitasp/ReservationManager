@@ -6,5 +6,5 @@ export default interface IResourceProviderModel {
     minReservationTime: Date,
     maxReservationTime: Date,
     description: string,
-    resources: Array<Number>        // Array<IResourceModel>, ha nem id-k kellenek
+    //resources: Array<Number>        // Array<IResourceModel>, ha nem id-k kellenek
 }

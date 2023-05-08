@@ -164,7 +164,7 @@ export default class TutorialsList extends Component<Props, State>{
 								<label>
 									<strong>Korábbi foglalások:</strong>
 								</label>{" "}
-								{currentUser.reservations.length > 0 ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
+								{"azok a foglalások, amiknek usere ez > 0" ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
 							</div>
 
 							<Link

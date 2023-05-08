@@ -176,7 +176,7 @@ export default class ResourceProviderList extends Component<Props, State>{
                                 <label>
                                     <strong>Foglalható erőforrások:</strong>
                                 </label>{" "}
-                                {currentProvider.resources.length > 0 ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
+                                {"azok az erőforrások amiknek a providere ez > 0" ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
                             </div>
 
                             <Link

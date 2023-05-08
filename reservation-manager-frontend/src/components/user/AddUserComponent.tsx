@@ -13,7 +13,7 @@ export default class AddUser extends Component<Props, State> {
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
 		this.onChangeRole = this.onChangeRole.bind(this);
-		this.onChangeReservations = this.onChangeReservations.bind(this);
+		//this.onChangeReservations = this.onChangeReservations.bind(this);
 		this.saveUser = this.saveUser.bind(this);
 		this.newUser = this.newUser.bind(this);
 
@@ -21,8 +21,8 @@ export default class AddUser extends Component<Props, State> {
 			id: null,
 			name: "",
 			role: "default",
-			reservations: [],	// new Array<IReservationModel>(), ha a teljes reservation-öket eltároljuk id helyett
-			submitted: false,
+			//reservations: [],	// new Array<IReservationModel>(), ha a teljes reservation-öket eltároljuk id helyett
+			submitted: false
 		};
 	}
 
@@ -38,17 +38,17 @@ export default class AddUser extends Component<Props, State> {
 		});
 	}
 
-	onChangeReservations(e: ChangeEvent<HTMLInputElement>) {
+	/*onChangeReservations(e: ChangeEvent<HTMLInputElement>) {
 		this.setState({
 			reservations: [parseInt(e.target.value)],
 		});
-	}
+	}*/
 
 	saveUser() {
 		const data: IUserModel = {
 			name: this.state.name,
-			role: this.state.role,
-			reservations: this.state.reservations,
+			role: this.state.role
+			//reservations: this.state.reservations,
 		};
 
 		UserDataService.create(data)
@@ -57,7 +57,7 @@ export default class AddUser extends Component<Props, State> {
 					id: response.data.id,
 					name: response.data.name,
 					role: response.data.role,
-					reservations: response.data.reservations,
+					//reservations: response.data.reservations,
 					submitted: true
 				});
 				console.log(response.data + "created.");
@@ -72,13 +72,13 @@ export default class AddUser extends Component<Props, State> {
 			id: null,
 			name: "",
 			role: "default",
-			reservations: [],
+			//reservations: [],
 			submitted: false
 		});
 	}
 
 	render() {
-		const { submitted, name, role, reservations } = this.state;
+		const { submitted, name, role } = this.state;
 
 		return (
 		  <div className="submit-form">
