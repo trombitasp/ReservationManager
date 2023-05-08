@@ -24,13 +24,13 @@ data class Resource (
     @Column(name = "description")
     var description: String,
 
-    @JsonBackReference          // TODO: Nem okoz ez problémát, hogy nem kerül szerializálásra ez a property?
+    //@JsonBackReference          // TODO: Nem okoz ez problémát, hogy nem kerül szerializálásra ez a property?
     @ManyToOne
     @JoinColumn(name = "resourceProvider_id")
     var resourceProvider: ResourceProvider,
 
-    @JsonManagedReference
+    /*@JsonManagedReference
     @OneToOne(mappedBy = "resource")
-    var reservation: Reservation,
+    var reservation: Reservation,*/
     //var imageId: Int,
 ) {}

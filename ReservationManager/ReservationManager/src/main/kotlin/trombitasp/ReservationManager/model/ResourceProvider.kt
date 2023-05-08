@@ -32,8 +32,8 @@ data class ResourceProvider (
     @Column(name = "description")
     var description: String = "",
 
-    @JsonManagedReference
+    /*@JsonManagedReference
     @OneToMany(mappedBy = "resourceProvider")
-    var resources: List<Resource>
+    var resources: List<Resource>*/
     //var imageId: Int      // TODO: később esetleg képet is menteni?
 ) {}

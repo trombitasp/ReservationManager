@@ -19,9 +19,9 @@ data class User (
     @Column(name = "role")
     var role: String = "default",
 
-    @JsonManagedReference
+    /*@JsonManagedReference
     @OneToMany(mappedBy = "user")
-    var reservations: List<Reservation> = emptyList()
+    var reservations: List<Reservation> = emptyList()*/
 ) {}
 
 // root: 1234

@@ -35,7 +35,7 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
                 name = resource.name,
                 description = resource.description,
                 resourceProvider = resource.resourceProvider,
-                reservation = resource.reservation)
+                /*reservation = resource.reservation*/)
             ResponseEntity.ok().body(resourceRepository.save(updatedResource))
         }.orElse(ResponseEntity.notFound().build())
     }

@@ -38,7 +38,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
                 description = resourceProvider.description,
                 minReservationTime = resourceProvider.minReservationTime,
                 maxReservationTime = resourceProvider.maxReservationTime,
-                resources = resourceProvider.resources)
+                /*resources = resourceProvider.resources*/)
             ResponseEntity.ok().body(resourceProviderRepository.save(updatedResourceProvider))
         }.orElse(ResponseEntity.notFound().build())
     }

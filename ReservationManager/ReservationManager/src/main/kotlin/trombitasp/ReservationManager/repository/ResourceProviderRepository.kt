@@ -7,5 +7,5 @@ import trombitasp.ReservationManager.model.ResourceProvider
 interface ResourceProviderRepository: JpaRepository<ResourceProvider, Int> {
     fun findAllByName(name: String): List<ResourceProvider>
 
-    fun findAllByDescriptionContaining(description: String): List<Resource>
+    fun findAllByDescriptionContaining(description: String): List<ResourceProvider>
 }
