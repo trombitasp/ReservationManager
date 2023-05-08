@@ -16,6 +16,7 @@ export default class AddResource extends Component<Props, State> {
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.saveResource = this.saveResource.bind(this);
         this.newResource = this.newResource.bind(this);
+        this.newResourceProvider = this.newResourceProvider.bind(this);
 
         this.state = {
             id: null,

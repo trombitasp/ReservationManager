@@ -1,5 +1,3 @@
-import IResourceModel from "./ResourceModel";
-
 export default interface IResourceProviderModel {
     id?: Number | null,
     name: string,

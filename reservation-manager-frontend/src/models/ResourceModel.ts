@@ -1,4 +1,3 @@
-import IReservationModel from "./ReservationModel";
 import IResourceProviderModel from "./ResourceProviderModel";
 
 export default interface IResourceModel {

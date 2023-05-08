@@ -4,6 +4,8 @@ import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddUser from './components/user/AddUserComponent';
+import ResourceProviderList from './components/resourceProvider/ResourceProviderListComponent';
+import UserListComponent from './components/user/UserListComponent';
 
 
 class App extends Component {
@@ -23,12 +25,12 @@ class App extends Component {
 						</li>
 						<li className="nav-item">
 							<Link to={"/resources"} className="nav-link">
-								Foglalható dolgok
+								Összes foglalható dolog
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link to={"/reservations"} className="nav-link">
-								Korábbi foglalások
+								Korábbi foglalások általad
 							</Link>
 						</li>
 						<li className="nav-item">
@@ -37,8 +39,8 @@ class App extends Component {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to={"/add"} className="nav-link">
-								Add
+							<Link to={"/users"} className="nav-link">
+								Felhasználók
 							</Link>
 						</li>
 					</div>
@@ -47,7 +49,9 @@ class App extends Component {
 				<div className="container mt-3">
 					
 					<Routes>
+						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
+						<Route path="/users" element={<UserListComponent/>} />
 					</Routes>
 						
 				</div>

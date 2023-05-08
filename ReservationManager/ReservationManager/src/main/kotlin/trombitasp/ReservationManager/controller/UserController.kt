@@ -8,6 +8,7 @@ import trombitasp.ReservationManager.repository.UserRepository
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 class UserController(private val userRepository: UserRepository) {
 
     @GetMapping("/users")

@@ -63,6 +63,10 @@ export default class ResourceProviderList extends Component<Props, State>{
     }
 
     setCurrentProvider(resourceProvider: IResourceProviderModel, index: number) {
+        let min = new Date(resourceProvider.minReservationTime);
+        let max = new Date(resourceProvider.maxReservationTime);
+        resourceProvider.maxReservationTime = max;
+        resourceProvider.minReservationTime = min;
         this.setState({
             currentProvider: resourceProvider,
             currentIndex: index
@@ -164,13 +168,13 @@ export default class ResourceProviderList extends Component<Props, State>{
                                 <label>
                                     <strong>Minimális foglalási idő:</strong>
                                 </label>{" "}
-                                {`${currentProvider.minReservationTime.getHours()}:${currentProvider.minReservationTime.getMinutes()}:${currentProvider.minReservationTime.getSeconds()}`}
+                                {`${currentProvider.minReservationTime.getHours()} óra ${currentProvider.minReservationTime.getMinutes()} perc ${currentProvider.minReservationTime.getSeconds()} másodperc`}
                             </div>
                             <div>
                                 <label>
                                     <strong>Maximális foglalási idő:</strong>
                                 </label>{" "}
-                                {`${currentProvider.maxReservationTime.getHours()}:${currentProvider.maxReservationTime.getMinutes()}:${currentProvider.maxReservationTime.getSeconds()}`}
+                                {`${currentProvider.maxReservationTime.getHours()} óra ${currentProvider.maxReservationTime.getMinutes()} perc ${currentProvider.maxReservationTime.getSeconds()} másodperc`}
                             </div>
                             <div>
                                 <label>
