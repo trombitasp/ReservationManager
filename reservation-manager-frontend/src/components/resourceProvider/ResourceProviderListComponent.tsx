@@ -1,37 +1,37 @@
 import { Component, ChangeEvent } from "react";
-import UserDataService from "../../services/UserService";
+import ResourceProviderDataService from "../../services/ResourceProviderService";
 import { Link } from "react-router-dom";
-import IUserModel from '../../models/UserModel';
+import IResourceProviderModel from '../../models/ResourceProviderModel';
 
 type Props = {};
 
 type State = {
-	users: Array<IUserModel>,
-	currentUser: IUserModel | null,
+	resourceProviders: Array<IResourceProviderModel>,
+	currentProvider: IResourceProviderModel | null,
 	currentIndex: number,
 	searchName: string
 };
 
-export default class TutorialsList extends Component<Props, State>{
+export default class ResourceProviderList extends Component<Props, State>{
 	constructor(props: Props) {
 		super(props);
 		this.onChangeSearchName = this.onChangeSearchName.bind(this);
-		this.retrieveUsers = this.retrieveUsers.bind(this);
+		this.retrieveResourceProviders = this.retrieveResourceProviders.bind(this);
 		this.refreshList = this.refreshList.bind(this);
-		this.setCurrentUser = this.setCurrentUser.bind(this);
+		this.setCurrentProvider = this.setCurrentProvider.bind(this);
 		this.removeAllTutorials = this.removeAllTutorials.bind(this);
 		this.searchName = this.searchName.bind(this);
 
 		this.state = {
-			users: [],
-			currentUser: null,
+			resourceProviders: [],
+			currentProvider: null,
 			currentIndex: -1,
 			searchName: ""
 		};
 	}
 
 	componentDidMount() {
-		this.retrieveUsers();
+		this.retrieveResourceProviders();
 	}
 
 	onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -41,11 +41,11 @@ export default class TutorialsList extends Component<Props, State>{
 		});
 	}
 
-	retrieveUsers() {
-		UserDataService.getAll()
+	retrieveResourceProviders() {
+		ResourceProviderDataService.getAll()
 			.then((response: any) => {
 				this.setState({
-					users: response.data
+					resourceProviders: response.data
 				});
 				console.log(response.data);
 			})
@@ -55,22 +55,22 @@ export default class TutorialsList extends Component<Props, State>{
 	}
 
 	refreshList() {
-		this.retrieveUsers();
+		this.retrieveResourceProviders();
 		this.setState({
-			currentUser: null,
+			currentProvider: null,
 			currentIndex: -1
 		});
 	}
 
-	setCurrentUser(user: IUserModel, index: number) {
+	setCurrentProvider(resourceProvider: IResourceProviderModel, index: number) {
 		this.setState({
-			currentUser: user,
+			currentProvider: resourceProvider,
 			currentIndex: index
 		});
 	}
 
 	removeAllTutorials() {
-		UserDataService.delete(1000000)		// TODO
+		ResourceProviderDataService.delete(1000000)		// TODO
 			.then((response: any) => {
 				console.log(response.data);
 				this.refreshList();
@@ -82,14 +82,14 @@ export default class TutorialsList extends Component<Props, State>{
 
 	searchName() {
 		this.setState({
-			currentUser: null,
+			currentProvider: null,
 			currentIndex: -1
 		});
 
-		UserDataService.findByName(this.state.searchName)
+		ResourceProviderDataService.findByName(this.state.searchName)
 			.then((response: any) => {
 				this.setState({
-					users: response.data
+					resourceProviders: response.data
 				});
 				console.log(response.data);
 			})
@@ -99,7 +99,7 @@ export default class TutorialsList extends Component<Props, State>{
 	}
 
 	render() {
-		const { searchName, users, currentUser, currentIndex } = this.state;
+		const { searchName, resourceProviders, currentProvider, currentIndex } = this.state;
 
 		return (
 			<div className="list row">
@@ -123,17 +123,17 @@ export default class TutorialsList extends Component<Props, State>{
 					</div>
 				</div>
 				<div className="col-md-6">
-					<h4>Felhasználók listája</h4>
+					<h4>Szolgáltatók listája</h4>
 
 					<ul className="list-group">
 						{ users &&
-							users.map((user: IUserModel, index: number) => (
+							users.map((resourceProvider: IResourceProviderModel, index: number) => (
 								<li
 									className={ "list-group-item " + (index === currentIndex ? "active" : "") }
-									onClick={ () => this.setCurrentUser(user, index) }
+									onClick={ () => this.setCurrentProvider(resourceProvider, index) }
 									key={ index }
 								>
-									{ user.name }
+									{ resourceProvider.name }
 								</li>
 							))}
 					</ul>
@@ -141,34 +141,29 @@ export default class TutorialsList extends Component<Props, State>{
 					<button
 						className="m-3 btn btn-sm btn-danger"
 						onClick={this.removeAllTutorials} >
-						Összes felhasználó törlése
+						Összes szolgáltató törlése
 					</button>
 				</div>
 				<div className="col-md-6">
-					{currentUser ? (
+					{currentProvider ? (
 						<div>
-							<h4>Felhasználó adatai:</h4>
+							<h4>Szolgáltató adatai:</h4>
 							<div>
 								<label>
 									<strong>Név:</strong>
 								</label>{" "}
-								{currentUser.name}
+								{currentProvider.name}
 							</div>
+                            { /* TODO min és max fogl. idő*/}
 							<div>
 								<label>
-									<strong>Felhasználói jog:</strong>
+									<strong>Foglalható erőforrások:</strong>
 								</label>{" "}
-								{currentUser.role}
-							</div>
-							<div>
-								<label>
-									<strong>Korábbi foglalások:</strong>
-								</label>{" "}
-								{currentUser.reservations.length > 0 ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
+								{currentProvider.resources.length > 0 ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
 							</div>
 
 							<Link
-								to={"/users/" + currentUser.id}
+								to={"/users/" + currentProvider.id}
 								className="badge badge-warning">
 								Módosít
 							</Link>
@@ -176,7 +171,7 @@ export default class TutorialsList extends Component<Props, State>{
 					) : (
 						<div>
 							<br />
-							<p>Kattints az egyik felhasználóra a listából!</p>
+							<p>Kattints az egyik szolgáltatóra a listából!</p>
 						</div>
 					)}
 				</div>
