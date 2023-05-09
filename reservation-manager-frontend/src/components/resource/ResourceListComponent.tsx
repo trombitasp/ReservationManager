@@ -1,38 +1,57 @@
 import { Component, ChangeEvent } from "react";
+import ResourceDataService from "../../services/ResourceService";
 import ResourceProviderDataService from "../../services/ResourceProviderService";
-import { Link, Route, Routes } from "react-router-dom";
-import IResourceProviderModel from '../../models/ResourceProviderModel';
-import ResourceList from "../resource/ResourceListComponent";
+import { Link } from "react-router-dom";
+import IResourceModel from '../../models/ResourceModel';
+import IResourceProviderModel from "../../models/ResourceProviderModel";
+import { withRouter, WithRouterProps } from "../../util/withRouter";
 
-type Props = {};
+interface Params {
+    id: string;
+}
+
+type Props = WithRouterProps<Params>;
 
 type State = {
-    resourceProviders: Array<IResourceProviderModel>,
-    currentProvider: IResourceProviderModel | null,
+    resources: Array<IResourceModel>,
+    currentResource: IResourceModel | null,
     currentIndex: number,
-    searchName: string
+    searchName: string,
+    provider: IResourceProviderModel
 };
 
-export default class ResourceProviderList extends Component<Props, State>{
+class ResourceList extends Component<Props, State>{
     constructor(props: Props) {
         super(props);
         this.onChangeSearchName = this.onChangeSearchName.bind(this);
-        this.retrieveResourceProviders = this.retrieveResourceProviders.bind(this);
+        this.retrieveResources = this.retrieveResources.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.setCurrentProvider = this.setCurrentProvider.bind(this);
+        this.setCurrentResource = this.setCurrentResource.bind(this);
         this.removeAllTutorials = this.removeAllTutorials.bind(this);
         this.searchName = this.searchName.bind(this);
 
         this.state = {
-            resourceProviders: [],
-            currentProvider: null,
+            resources: [],
+            currentResource: null,
             currentIndex: -1,
-            searchName: ""
+            searchName: "",
+            provider: this.defaultProvider()
         };
+        this.getProviderById(this.props.match.params.id);
     }
 
+    defaultProvider(): IResourceProviderModel {
+        let temp: IResourceProviderModel = {
+            id: null,
+            name: "teszt",
+            minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
+            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            description: ""
+        };
+        return temp;
+    }
     componentDidMount() {
-        this.retrieveResourceProviders();
+        this.retrieveResources();
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -42,11 +61,24 @@ export default class ResourceProviderList extends Component<Props, State>{
         });
     }
 
-    retrieveResourceProviders() {
-        ResourceProviderDataService.getAll()
+    getProviderById(id: string) {
+        ResourceProviderDataService.findById(id)
+            .then((response: any) => {
+                console.log(response.data)
+                this.setState({
+                    provider: response.data
+                })
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    }
+
+    retrieveResources() {
+        ResourceDataService.getAll()
             .then((response: any) => {
                 this.setState({
-                    resourceProviders: response.data
+                    resources: response.data
                 });
                 console.log(response.data);
             })
@@ -56,26 +88,22 @@ export default class ResourceProviderList extends Component<Props, State>{
     }
 
     refreshList() {
-        this.retrieveResourceProviders();
+        this.retrieveResources();
         this.setState({
-            currentProvider: null,
+            currentResource: null,
             currentIndex: -1
         });
     }
 
-    setCurrentProvider(resourceProvider: IResourceProviderModel, index: number) {
-        let min = new Date(resourceProvider.minReservationTime);
-        let max = new Date(resourceProvider.maxReservationTime);
-        resourceProvider.maxReservationTime = max;
-        resourceProvider.minReservationTime = min;
+    setCurrentResource(resource: IResourceModel, index: number) {
         this.setState({
-            currentProvider: resourceProvider,
+            currentResource: resource,
             currentIndex: index
         });
     }
 
     removeAllTutorials() {
-        ResourceProviderDataService.delete(1000000)		// TODO
+        ResourceDataService.delete(1000000)		// TODO
             .then((response: any) => {
                 console.log(response.data);
                 this.refreshList();
@@ -87,14 +115,14 @@ export default class ResourceProviderList extends Component<Props, State>{
 
     searchName() {
         this.setState({
-            currentProvider: null,
+            currentResource: null,
             currentIndex: -1
         });
 
-        ResourceProviderDataService.findByName(this.state.searchName)
+        ResourceDataService.findByName(this.state.searchName)
             .then((response: any) => {
                 this.setState({
-                    resourceProviders: response.data
+                    resources: response.data
                 });
                 console.log(response.data);
             })
@@ -104,7 +132,7 @@ export default class ResourceProviderList extends Component<Props, State>{
     }
 
     render() {
-        const { searchName, resourceProviders, currentProvider, currentIndex } = this.state;
+        const { searchName, resources, currentResource, currentIndex } = this.state;
 
         return (
             <div className="list row">
@@ -128,77 +156,57 @@ export default class ResourceProviderList extends Component<Props, State>{
                     </div>
                 </div>
                 <div className="col-md-6">
-                    <h4>Szolgáltatók listája</h4>
+                    <h4>{this.state.provider.name} erőforrásai </h4>
 
                     <ul className="list-group">
-                        {resourceProviders &&
-                            resourceProviders.map((resourceProvider: IResourceProviderModel, index: number) => (
+                        {resources &&
+                            resources.map((resourceProvider: IResourceModel, index: number) => (
                                 <li
                                     className={"list-group-item " + (index === currentIndex ? "active" : "")}
-                                    onClick={() => this.setCurrentProvider(resourceProvider, index)}
+                                    onClick={() => this.setCurrentResource(resourceProvider, index)}
                                     key={index}
                                 >
                                     {resourceProvider.name}
                                 </li>
                             ))}
                     </ul>
-
                     <button
                         className="m-3 btn btn-sm btn-danger"
                         onClick={this.removeAllTutorials} >
-                        Összes szolgáltató törlése
+                        Összes erőforrás törlése
                     </button>
                 </div>
                 <div className="col-md-6">
-                    {currentProvider ? (
+                    {currentResource ? (
                         <div>
-                            <h4>Szolgáltató adatai:</h4>
+                            <h4>Erőforrás adatai:</h4>
                             <div>
                                 <label>
                                     <strong>Név:</strong>
                                 </label>{" "}
-                                {currentProvider.name}
+                                {currentResource.name}
                             </div>
                             <div>
                                 <label>
                                     <strong>Leírás:</strong>
                                 </label>{" "}
-                                {currentProvider.description}
+                                {currentResource.description}
                             </div>
-                            <div>
-                                <label>
-                                    <strong>Minimális foglalási idő:</strong>
-                                </label>{" "}
-                                {`${currentProvider.minReservationTime.getHours()} óra ${currentProvider.minReservationTime.getMinutes()} perc ${currentProvider.minReservationTime.getSeconds()} másodperc`}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Maximális foglalási idő:</strong>
-                                </label>{" "}
-                                {`${currentProvider.maxReservationTime.getHours()} óra ${currentProvider.maxReservationTime.getMinutes()} perc ${currentProvider.maxReservationTime.getSeconds()} másodperc`}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Foglalható erőforrások száma:</strong>
-                                </label>{" "}
-                                {"azok az erőforrások amiknek a providere ez > 0" ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
-                            </div>
-
                             <Link
-                                to={"/resourceproviders/" + currentProvider.id}
+                                to={"/resources/" + currentResource.id}
                                 className="m-3 btn btn-sm btn-warning">
                                 Módosít
                             </Link>
                             <Link
-                                to={"/resources/provider/" + currentProvider.id}
+                                to={"/reservations/resource/" + currentResource.id}
                                 className="m-3 btn btn-sm btn-success">
-                                Erőforrások
+                                Foglalás
                             </Link>
                         </div>
                     ) : (
                         <div>
                             <br />
-                            <p>Kattints az egyik szolgáltatóra a listából!</p>
+                            <p>Kattints az egyik erőforrásra a listából!</p>
                         </div>
                     )}
                 </div>
@@ -206,3 +214,5 @@ export default class ResourceProviderList extends Component<Props, State>{
         );
     }
 }
+
+export default withRouter(ResourceList);
