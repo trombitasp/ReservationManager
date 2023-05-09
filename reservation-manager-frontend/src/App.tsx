@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AddUser from './components/user/AddUserComponent';
 import ResourceProviderList from './components/resourceProvider/ResourceProviderListComponent';
 import UserListComponent from './components/user/UserListComponent';
+import ResourceList from './components/resource/ResourceListComponent';
 
 
 class App extends Component {
@@ -14,7 +15,7 @@ class App extends Component {
 		return (
 			<div>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<a href="/tutorials" className="navbar-brand">
+					<a href="/" className="navbar-brand">
 						Foglaláskezelő
 					</a>
 					<div className="navbar-nav mr-auto">
@@ -29,18 +30,18 @@ class App extends Component {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to={"/reservations"} className="nav-link">
-								Korábbi foglalások általad
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link to={"/users"} className="nav-link">
-								Profil adatok / Bejelentkezés
+							<Link to={"/reservations/user/1"} className="nav-link">
+								Korábbi foglalásaid
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link to={"/users"} className="nav-link">
 								Felhasználók
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to={"/users"} className="nav-link">
+								Profil adatok / Bejelentkezés
 							</Link>
 						</li>
 					</div>
@@ -52,8 +53,9 @@ class App extends Component {
 						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
 						<Route path="/users" element={<UserListComponent/>} />
+						<Route path="/resources/provider/:id" element={<ResourceList />} />
 					</Routes>
-						
+					
 				</div>
 
 			</div>
