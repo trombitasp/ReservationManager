@@ -8,6 +8,7 @@ import trombitasp.ReservationManager.repository.ResourceRepository
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 class ResourceController(private val resourceRepository: ResourceRepository) {
     @GetMapping("/resources")
     fun findAllResource() = resourceRepository.findAll()
