@@ -7,6 +7,7 @@ import AddUser from './components/user/AddUserComponent';
 import ResourceProviderList from './components/resourceProvider/ResourceProviderListComponent';
 import UserListComponent from './components/user/UserListComponent';
 import ResourceList from './components/resource/ResourceListComponent';
+import AddReservation from './components/reservation/AddReservationComponent';
 
 
 class App extends Component {
@@ -48,16 +49,14 @@ class App extends Component {
 				</nav>
 
 				<div className="container mt-3">
-					
 					<Routes>
 						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
 						<Route path="/users" element={<UserListComponent/>} />
 						<Route path="/resources/provider/:id" element={<ResourceList />} />
+						<Route path="/reservations/resource/:id" element={<AddReservation />} />
 					</Routes>
-					
 				</div>
-
 			</div>
 
 			/*<nav className="navbar navbar-inverse navbar-fixed-top">

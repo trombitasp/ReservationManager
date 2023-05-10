@@ -1,17 +1,24 @@
 import { Component, ChangeEvent } from "react";
 import ReservationDataService from "../../services/ReservationService";
+import ResourceProviderDataService from "../../services/ResourceProviderService";
+import ResourceDataService from "../../services/ResourceService";
 import IReservatonModel from "../../models/ReservationModel";
 import IUserModel from "../../models/UserModel";
 import IResourceModel from "../../models/ResourceModel";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
+import { withRouter, WithRouterProps } from "../../util/withRouter";
 
-type Props = {};
+interface Params {
+    id: string;
+}
+
+type Props = WithRouterProps<Params>;
 
 type State = IReservatonModel & {
-    submitted: boolean;
+    submitted: boolean
 };
 
-export default class AddReservation extends Component<Props, State> {
+class AddReservation extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.onChangeBeginningOfReservation = this.onChangeBeginningOfReservation.bind(this);
@@ -24,11 +31,12 @@ export default class AddReservation extends Component<Props, State> {
             id: null,
             user: this.newUser(),
             resource: this.newResource(),
-            beginningOfReservation: new Date(2000, 1, 1, 0, 0, 0, 0),
-            endOfReservation: new Date(2000, 1, 1, 0, 0, 1, 0),
+            beginningOfReservation: new Date(),
+            endOfReservation: new Date(),
             description: "",
-            submitted: false,
+            submitted: false
         };
+        this.getResourceById(this.props.match.params.id);
     }
 
     newResource() {
@@ -53,16 +61,30 @@ export default class AddReservation extends Component<Props, State> {
     }
 
     newUser() {
-        let temp: IUserModel = {
-            id: null,
-            name: "",
-            role: "default"
+        let temp: IUserModel = {    // TODO: ehelyett 0, "", "", majd valahogyan el kell kérni a bejelentkezett felh.-t
+            id: 1,
+            name: "Trombitás Péter",
+            role: "admin"
         };
         return temp;
     }
 
+    getResourceById(id: string) {
+        ResourceDataService.findById(id)
+            .then((response: any) => {
+                console.log(response.data)
+                this.setState({
+                    resource: response.data
+                })
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    }
+
     onChangeBeginningOfReservation(e: ChangeEvent<HTMLInputElement>) {
         // input type="datetime-local" értékét spliteljük évre, hónapra, napra, órára és percre
+        console.log(e.target.value);
         let [date, time] = e.target.value.split("T");
         let [y, m, d] = date.split("-");
         let [hours, minutes] = time.split(":");
@@ -119,11 +141,39 @@ export default class AddReservation extends Component<Props, State> {
             id: null,
             user: this.newUser(),
             resource: this.newResource(),
-            beginningOfReservation: new Date(2023, 1, 31, 1, 0, 0, 0),
-            endOfReservation: new Date(2023, 1, 31, 1, 0, 0, 0),
+            beginningOfReservation: new Date(),
+            endOfReservation: new Date(),
             description: "",
             submitted: false
         });
+    }
+
+    getDateTime_yyyyMMddhhmm(date: Date): string {
+        var months: string;
+        if (date.getMonth() > 9){
+            months = date.getMonth().toString();
+        } else {
+            months = `0${date.getMonth().toString()}`;
+        }
+        var days: string;
+        if (date.getDay() > 9){
+            days = date.getDay().toString();
+        } else {
+            days = `0${date.getDay().toString()}`;
+        }
+        var hours: string;
+        if (date.getHours() > 9){
+            hours = date.getHours().toString();
+        } else {
+            hours = `0${date.getHours().toString()}`;
+        }
+        var minutes: string;
+        if (date.getMinutes() > 9){
+            minutes = date.getMinutes().toString();
+        } else {
+            minutes = `0${date.getMinutes().toString()}`;
+        }
+        return `${date.getFullYear()}-${months}-${days}T${hours}:${minutes}`;
     }
 
     render() {
@@ -147,7 +197,7 @@ export default class AddReservation extends Component<Props, State> {
                                 className="form-control"
                                 id="beginning"
                                 required
-                                value={`${beginningOfReservation.getFullYear()}-${beginningOfReservation.getMonth()}-${beginningOfReservation.getDay()}T${beginningOfReservation.getHours()}:${beginningOfReservation.getMinutes()}`}
+                                value={this.getDateTime_yyyyMMddhhmm(beginningOfReservation)}
                                 onChange={this.onChangeBeginningOfReservation}
                                 name="beginning"
                             />
@@ -159,7 +209,7 @@ export default class AddReservation extends Component<Props, State> {
                                 className="form-control"
                                 id="end"
                                 required
-                                value={`${endOfReservation.getFullYear()}-${endOfReservation.getMonth()}-${endOfReservation.getDay()}T${endOfReservation.getHours()}:${endOfReservation.getMinutes()}`}
+                                value={this.getDateTime_yyyyMMddhhmm(endOfReservation)}
                                 onChange={this.onChangeEndOfReservation}
                                 name="end"
                             />
@@ -186,3 +236,5 @@ export default class AddReservation extends Component<Props, State> {
         );
     }
 }
+
+export default withRouter(AddReservation);

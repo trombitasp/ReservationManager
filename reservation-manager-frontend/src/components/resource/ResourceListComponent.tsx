@@ -43,7 +43,7 @@ class ResourceList extends Component<Props, State>{
     defaultProvider(): IResourceProviderModel {
         let temp: IResourceProviderModel = {
             id: null,
-            name: "teszt",
+            name: "",
             minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
             maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
             description: ""
