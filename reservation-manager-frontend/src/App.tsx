@@ -10,7 +10,7 @@ import ResourceList from './components/resource/ResourceListComponent';
 import AddReservation from './components/reservation/AddReservationComponent';
 import UserDetail from './components/user/UserDetailComponent';
 import ResourceProviderDetails from './components/resourceProvider/ResourceProviderDetailsComponent';
-
+import ResourceDetails from './components/resource/ResourceDetailsComponent';
 
 class App extends Component {
 	render() {
@@ -59,7 +59,7 @@ class App extends Component {
 						<Route path="/reservations/resource/:id" element={<AddReservation/>} />
 						<Route path="/users/:id" element={<UserDetail/>} />
 						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails/>} />
-						
+						<Route path="/resources/:id" element={<ResourceDetails/>} />
 					</Routes>
 				</div>
 			</div>

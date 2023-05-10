@@ -169,7 +169,7 @@ class ResourceProviderDetails extends Component<Props, State> {
             <div>
                 {currentProvider ? (
                     <div className="edit-form">
-                        <h4>Felhasználó adatainak szerkesztése</h4>
+                        <h4>Szolgáltató adatainak szerkesztése</h4>
                         <form>
                             <div className="form-group">
                                 <label htmlFor="name">Név:</label>
@@ -183,7 +183,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="minTime">Legrövidebb lehetséges foglalási idő</label>
+                                <label htmlFor="minTime">Legrövidebb lehetséges foglalási idő:</label>
                                 <input
                                     type="time"
                                     className="form-control"
@@ -194,7 +194,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="maxTime">Leghosszabb lehetséges foglalási idő</label>
+                                <label htmlFor="maxTime">Leghosszabb lehetséges foglalási idő:</label>
                                 <input
                                     type="time"
                                     className="form-control"
@@ -205,7 +205,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="description">Leírás</label>
+                                <label htmlFor="description">Leírás:</label>
                                 <input
                                     type="text"
                                     className="form-control"

@@ -1,8 +1,10 @@
 import { Component, ChangeEvent } from "react";
 import { withRouter, WithRouterProps } from "../../util/withRouter";
 
-import UserDataService from "../../services/UserService";
-import IUserModel from "../../models/UserModel";
+import ResourceDataService from "../../services/ResourceService";
+import ResourceProviderDataService from "../../services/ResourceProviderService";
+import IResourceModel from "../../models/ResourceModel";
+import IResourceProviderModel from "../../models/ResourceProviderModel";
 
 interface RouterProps { // type for `match.params`
     id: string; // must be type `string` since value comes from the URL
@@ -11,62 +13,75 @@ interface RouterProps { // type for `match.params`
 type Props = WithRouterProps<RouterProps>;
 
 type State = {
-    currentUser: IUserModel;
+    currentResource: IResourceModel;
     message: string;
 }
 
-class UserDetails extends Component<Props, State> {
+class ResourceDetails extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeRole = this.onChangeRole.bind(this);
-        this.getUser = this.getUser.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.getResource = this.getResource.bind(this);
         //this.updatePublished = this.updatePublished.bind(this);
-        this.updateUser = this.updateUser.bind(this);
-        this.deleteUser = this.deleteUser.bind(this);
+        this.updateResource = this.updateResource.bind(this);
+        this.deleteResource = this.deleteResource.bind(this);
 
         this.state = {
-            currentUser: {
+            currentResource: {
                 id: null,
                 name: "",
-                role: "default"
+                description: "",
+                resourceProvider: this.newResourceProvider()
             },
             message: "",
         };
+
+    }
+
+    newResourceProvider() {
+        let temp: IResourceProviderModel = {
+            id: null,
+            name: "",
+            minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
+            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            description: ""
+        };
+        return temp;
     }
 
     componentDidMount() {
-        this.getUser(this.props.match.params.id);
+        this.getResource(this.props.match.params.id);
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
         const name = e.target.value;
         this.setState(function (prevState) {
             return {
-                currentUser: {
-                    ...prevState.currentUser,
+                currentResource: {
+                    ...prevState.currentResource,
                     name: name,
                 },
             };
         });
     }
 
-    onChangeRole(e: ChangeEvent<HTMLInputElement>) {
-        const role = e.target.value;
+    onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
+        const description = e.target.value;
 
         this.setState((prevState) => ({
-            currentUser: {
-                ...prevState.currentUser,
-                role: role,
+            currentResource: {
+                ...prevState.currentResource,
+                description: description,
             },
         }));
     }
 
-    getUser(id: string) {
-        UserDataService.findById(id)
+    getResource(id: string) {
+        ResourceDataService.findById(id)
             .then((response: any) => {
                 this.setState({
-                    currentUser: response.data,
+                    currentResource: response.data,
                 });
                 console.log(response.data);
             })
@@ -75,32 +90,8 @@ class UserDetails extends Component<Props, State> {
             });
     }
 
-    /*updatePublished(status: boolean) {
-        const data: IUserModel = {
-            id: this.state.currentUser.id,
-            title: this.state.currentUser.title,
-            description: this.state.currentUser.description,
-            published: status,
-        };
-
-        UserDataService.update(data, this.state.currentUser.id)
-            .then((response: any) => {
-                this.setState((prevState) => ({
-                    currentUser: {
-                        ...prevState.currentUser,
-                        published: status,
-                    },
-                    message: "The status was updated successfully!"
-                }));
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
-    }*/
-
-    updateUser() {
-        UserDataService.update(this.state.currentUser, this.state.currentUser.id!)
+    updateResource() {
+        ResourceDataService.update(this.state.currentResource, this.state.currentResource.id!)
             .then((response: any) => {
                 console.log(response.data);
                 this.setState({
@@ -112,8 +103,8 @@ class UserDetails extends Component<Props, State> {
             });
     }
 
-    deleteUser() {
-        UserDataService.delete(this.state.currentUser.id!)
+    deleteResource() {
+        ResourceDataService.delete(this.state.currentResource.id!)
             .then((response: any) => {
                 console.log(response.data);
                 this.props.history.push("/resourceproviders");
@@ -124,13 +115,13 @@ class UserDetails extends Component<Props, State> {
     }
 
     render() {
-        const { currentUser } = this.state;
-
+        const { currentResource } = this.state;
         return (
             <div>
-                {currentUser ? (
+                {currentResource ? (
                     <div className="edit-form">
-                        <h4>Felhasználó adatainak szerkesztése</h4>
+                        <h3>Erőforrás adatainak szerkesztése</h3>
+                        <h4>{currentResource.resourceProvider.name}</h4>
                         <form>
                             <div className="form-group">
                                 <label htmlFor="name">Név:</label>
@@ -138,45 +129,30 @@ class UserDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="name"
-                                    value={currentUser.name}
+                                    value={currentResource.name}
                                     onChange={this.onChangeName}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="role">Felhasználói jog:</label>
+                                <label htmlFor="role">Leírás:</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="role"
-                                    value={currentUser.role}
-                                    onChange={this.onChangeRole}
+                                    value={currentResource.description}
+                                    onChange={this.onChangeDescription}
                                 />
                             </div>
                         </form>
-                        {/*currentUser.published ? (
-                            <button
-                                className="badge badge-primary mr-2"
-                                onClick={() => this.updatePublished(false)}
-                            >
-                                UnPublish
-                            </button>
-                        ) : (
-                            <button
-                                className="badge badge-primary mr-2"
-                                onClick={() => this.updatePublished(true)}
-                            >
-                                Publish
-                            </button>
-                        )*/}
                         <button
                             type="submit"
                             className="m-3 btn btn-sm btn-success"
-                            onClick={this.updateUser}>
+                            onClick={this.updateResource}>
                             Mentés
                         </button>
                         <button
                             className="m-3 btn btn-sm btn-danger"
-                            onClick={this.deleteUser}>
+                            onClick={this.deleteResource}>
                             Törlés
                         </button>
                         <button
@@ -189,11 +165,11 @@ class UserDetails extends Component<Props, State> {
                 ) : (
                     <div>
                         <br />
-                        <p>Válassz egy felhasználót a listából!</p>
+                        <p>Válassz egy erőforrást a listából!</p>
                     </div>
                 )}
             </div>
         );
     }
 }
-export default withRouter(UserDetails)
+export default withRouter(ResourceDetails)

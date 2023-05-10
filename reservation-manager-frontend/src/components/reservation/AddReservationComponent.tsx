@@ -35,7 +35,7 @@ class AddReservation extends Component<Props, State> {
             description: "",
             submitted: false
         };
-        this.getResourceById(this.props.match.params.id);
+        this.setResourceById(this.props.match.params.id);
     }
 
     newResource() {
@@ -68,7 +68,7 @@ class AddReservation extends Component<Props, State> {
         return temp;
     }
 
-    getResourceById(id: string) {
+    setResourceById(id: string) {
         ResourceDataService.findById(id)
             .then((response: any) => {
                 console.log(response.data)
