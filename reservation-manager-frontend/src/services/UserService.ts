@@ -22,11 +22,11 @@ class UserDataService {
       return http.post<IUserModel>("/users", data);
     }
   
-    update(data: IUserModel, id: Number) {
+    update(data: IUserModel, id: number) {
       return http.put<any>(`/users/${id}`, data);
     }
   
-    delete(id: Number) {
+    delete(id: number) {
       return http.delete<any>(`/users/${id}`);
     }
   

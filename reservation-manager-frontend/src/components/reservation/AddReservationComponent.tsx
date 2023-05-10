@@ -1,6 +1,5 @@
 import { Component, ChangeEvent } from "react";
 import ReservationDataService from "../../services/ReservationService";
-import ResourceProviderDataService from "../../services/ResourceProviderService";
 import ResourceDataService from "../../services/ResourceService";
 import IReservatonModel from "../../models/ReservationModel";
 import IUserModel from "../../models/UserModel";
@@ -190,6 +189,8 @@ class AddReservation extends Component<Props, State> {
                     </div>
                 ) : (   // TODO: a provider min és max reservationTime-ja alapján validálni kell!
                     <div>
+                        <h3>{this.state.resource.resourceProvider.name} </h3>
+                        <h4>{this.state.resource.name} </h4>
                         <div className="form-group">
                             <label htmlFor="beginning">Foglalási idő kezdete</label>
                             <input

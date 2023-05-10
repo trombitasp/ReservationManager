@@ -169,7 +169,7 @@ export default class TutorialsList extends Component<Props, State>{
 
 							<Link
 								to={"/users/" + currentUser.id}
-								className="badge badge-warning">
+								className="m-3 btn btn-sm btn-warning">
 								Módosít
 							</Link>
 						</div>

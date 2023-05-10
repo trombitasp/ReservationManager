@@ -8,6 +8,7 @@ import ResourceProviderList from './components/resourceProvider/ResourceProvider
 import UserListComponent from './components/user/UserListComponent';
 import ResourceList from './components/resource/ResourceListComponent';
 import AddReservation from './components/reservation/AddReservationComponent';
+import UserDetail from './components/user/UserDetailComponent';
 
 
 class App extends Component {
@@ -53,8 +54,9 @@ class App extends Component {
 						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
 						<Route path="/users" element={<UserListComponent/>} />
-						<Route path="/resources/provider/:id" element={<ResourceList />} />
-						<Route path="/reservations/resource/:id" element={<AddReservation />} />
+						<Route path="/resources/provider/:id" element={<ResourceList/>} />
+						<Route path="/reservations/resource/:id" element={<AddReservation/>} />
+						<Route path="/users/:id" element={<UserDetail/>} />
 					</Routes>
 				</div>
 			</div>
