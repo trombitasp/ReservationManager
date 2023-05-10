@@ -7,6 +7,7 @@ import AddUser from './components/user/AddUserComponent';
 import ResourceProviderList from './components/resourceProvider/ResourceProviderListComponent';
 import UserList from './components/user/UserListComponent';
 import ResourceList from './components/resource/ResourceListComponent';
+import ReservationList from './components/reservation/ReservationListCoomponent';
 import AddReservation from './components/reservation/AddReservationComponent';
 import UserDetail from './components/user/UserDetailComponent';
 import ResourceProviderDetails from './components/resourceProvider/ResourceProviderDetailsComponent';
@@ -60,6 +61,7 @@ class App extends Component {
 						<Route path="/users/:id" element={<UserDetail/>} />
 						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails/>} />
 						<Route path="/resources/:id" element={<ResourceDetails/>} />
+						<Route path="/reservations/user/:id" element={<ReservationList/>}/>
 					</Routes>
 				</div>
 			</div>
