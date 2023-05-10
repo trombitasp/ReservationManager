@@ -5,10 +5,11 @@ import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddUser from './components/user/AddUserComponent';
 import ResourceProviderList from './components/resourceProvider/ResourceProviderListComponent';
-import UserListComponent from './components/user/UserListComponent';
+import UserList from './components/user/UserListComponent';
 import ResourceList from './components/resource/ResourceListComponent';
 import AddReservation from './components/reservation/AddReservationComponent';
 import UserDetail from './components/user/UserDetailComponent';
+import ResourceProviderDetails from './components/resourceProvider/ResourceProviderDetailsComponent';
 
 
 class App extends Component {
@@ -53,10 +54,12 @@ class App extends Component {
 					<Routes>
 						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
-						<Route path="/users" element={<UserListComponent/>} />
+						<Route path="/users" element={<UserList/>} />
 						<Route path="/resources/provider/:id" element={<ResourceList/>} />
 						<Route path="/reservations/resource/:id" element={<AddReservation/>} />
 						<Route path="/users/:id" element={<UserDetail/>} />
+						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails/>} />
+						
 					</Routes>
 				</div>
 			</div>

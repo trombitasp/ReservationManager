@@ -23,7 +23,7 @@ class UserDetails extends Component<Props, State> {
         this.getUser = this.getUser.bind(this);
         //this.updatePublished = this.updatePublished.bind(this);
         this.updateUser = this.updateUser.bind(this);
-        this.deleteTutorial = this.deleteTutorial.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
 
         this.state = {
             currentUser: {
@@ -40,12 +40,12 @@ class UserDetails extends Component<Props, State> {
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
-        const title = e.target.value;
+        const name = e.target.value;
         this.setState(function (prevState) {
             return {
                 currentUser: {
                     ...prevState.currentUser,
-                    title: title,
+                    name: name,
                 },
             };
         });
@@ -112,7 +112,7 @@ class UserDetails extends Component<Props, State> {
             });
     }
 
-    deleteTutorial() {
+    deleteUser() {
         UserDataService.delete(this.state.currentUser.id!)
             .then((response: any) => {
                 console.log(response.data);
@@ -176,7 +176,7 @@ class UserDetails extends Component<Props, State> {
                         </button>
                         <button
                             className="m-3 btn btn-sm btn-danger"
-                            onClick={this.deleteTutorial}>
+                            onClick={this.deleteUser}>
                             Törlés
                         </button>
                         <button
