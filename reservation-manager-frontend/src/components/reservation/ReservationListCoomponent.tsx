@@ -25,7 +25,7 @@ class ReservationList extends Component<Props, State>{
     constructor(props: Props) {
         super(props);
         this.onChangeSearchName = this.onChangeSearchName.bind(this);
-        this.retrieveReservations = this.retrieveReservations.bind(this);
+        this.retrieveReservationsById = this.retrieveReservationsById.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.setCurrentResource = this.setCurrentResource.bind(this);
         this.removeAllTutorials = this.removeAllTutorials.bind(this);
@@ -38,7 +38,7 @@ class ReservationList extends Component<Props, State>{
             searchName: "",
             resource: this.newResource()
         };
-        this.setResourceById(this.props.match.params.id);
+        //this.setResourceById(this.props.match.params.id);
     }
 
     newResource() {
@@ -63,7 +63,7 @@ class ReservationList extends Component<Props, State>{
     }
     
     componentDidMount() {
-        this.retrieveReservations();
+        this.retrieveReservationsById(this.props.match.params.id);
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -73,7 +73,7 @@ class ReservationList extends Component<Props, State>{
         });
     }
 
-    setResourceById(id: string) {
+    /*setResourceById(id: string) {
         ResourceDataService.findById(id)
             .then((response: any) => {
                 console.log(response.data)
@@ -84,10 +84,10 @@ class ReservationList extends Component<Props, State>{
             .catch((e: Error) => {
                 console.log(e);
             });
-    }
+    }*/
 
-    retrieveReservations() {
-        ReservationDataService.getAll()
+    retrieveReservationsById(id: string) {
+        ReservationDataService.findByUserId(id)
             .then((response: any) => {
                 this.setState({
                     reservations: response.data
@@ -100,7 +100,7 @@ class ReservationList extends Component<Props, State>{
     }
 
     refreshList() {
-        this.retrieveReservations();
+        this.retrieveReservationsById(this.props.match.params.id);
         this.setState({
             currentReservation: null,
             currentIndex: -1,
