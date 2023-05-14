@@ -186,13 +186,13 @@ class ReservationList extends Component<Props, State>{
                     <button
                         className="m-3 btn btn-sm btn-danger"
                         onClick={this.removeAllTutorials} >
-                        Összes erőforrás törlése
+                        Összes foglalási előzmény törlése
                     </button>
                 </div>
                 <div className="col-md-6">
                     {currentReservation ? (
                         <div>
-                            <h4>Erőforrás adatai:</h4>
+                            <h4>Foglalás adatai:</h4>
                             <div>
                                 <label>
                                     <strong>Leírás:</strong>
@@ -201,25 +201,21 @@ class ReservationList extends Component<Props, State>{
                             </div>
                             <div>
                                 <label>
-                                    <strong>Leírás:</strong>
+                                    <strong>Foglalás kezdete:</strong>
                                 </label>{" "}
-                                {currentReservation.description}
+                                {`${currentReservation.beginningOfReservation.toString().substring(0, 10)}, ${currentReservation.beginningOfReservation.toString().substring(11, 19)}`}
                             </div>
-                            <Link
-                                to={"/resources/" + currentReservation.id}
-                                className="m-3 btn btn-sm btn-warning">
-                                Módosít
-                            </Link>
-                            <Link
-                                to={"/reservations/resource/" + currentReservation.id}
-                                className="m-3 btn btn-sm btn-success">
-                                Foglalás
-                            </Link>
+                            <div>
+                                <label>
+                                    <strong>Foglalás vége:</strong>
+                                </label>{" "}
+                                {`${currentReservation.endOfReservation.toString().substring(0, 10)}, ${currentReservation.endOfReservation.toString().substring(11, 19)}`}
+                            </div>
                         </div>
                     ) : (
                         <div>
                             <br />
-                            <p>Kattints az egyik erőforrásra a listából!</p>
+                            <p>Kattints az egyik foglalásra a listából!</p>
                         </div>
                     )}
                 </div>
