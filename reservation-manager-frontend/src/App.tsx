@@ -56,7 +56,7 @@ class App extends Component {
 						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList/>} />)}
 						<Route path="/adduser" element={<AddUser/>} />
 						<Route path="/users" element={<UserList/>} />
-						<Route path="/resources/provider/:id" element={<ResourceList/>} />
+						{['/resources/provider/:id', '/resources'].map(path => <Route path={path} element={<ResourceList/>} />)}
 						<Route path="/reservations/resource/:id" element={<AddReservation/>} />
 						<Route path="/users/:id" element={<UserDetail/>} />
 						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails/>} />
