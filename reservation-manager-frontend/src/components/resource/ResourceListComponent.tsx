@@ -62,6 +62,9 @@ class ResourceList extends Component<Props, State>{
     }
 
     getProviderById(id: string) {
+        if (typeof id ==='undefined' || id.length === 0) {  // ha nincs id, akkor az összes providert meg kell jeleníteni
+            return;
+        }
         ResourceProviderDataService.findById(id)
             .then((response: any) => {
                 console.log(response.data)
@@ -75,7 +78,7 @@ class ResourceList extends Component<Props, State>{
     }
 
     retrieveResources() {
-        ResourceDataService.getAll()
+        ResourceDataService.getAll()        // TODO: nem az összes kell (csak ha ninsc provider.id), hanem az adott provider resource-ai
             .then((response: any) => {
                 this.setState({
                     resources: response.data
@@ -119,16 +122,20 @@ class ResourceList extends Component<Props, State>{
             currentIndex: -1
         });
 
-        ResourceDataService.findByName(this.state.searchName)
-            .then((response: any) => {
-                this.setState({
-                    resources: response.data
+        if (typeof this.state.searchName === 'undefined' || this.state.searchName.length === 0) {
+            this.retrieveResources();
+        } else {
+            ResourceDataService.findByName(this.state.searchName)
+                .then((response: any) => {
+                    this.setState({
+                        resources: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch((e: Error) => {
+                    console.log(e);
                 });
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+        }
     }
 
     render() {
@@ -156,7 +163,11 @@ class ResourceList extends Component<Props, State>{
                     </div>
                 </div>
                 <div className="col-md-6">
-                    <h4>{this.state.provider.name} erőforrásai </h4>
+                    {this.state.provider.name === "" ? (
+                        <h4> Összes erőforrás </h4>
+                    ) : (
+                        <h4>{this.state.provider.name} erőforrásai </h4>
+                    )}
 
                     <ul className="list-group">
                         {resources &&
