@@ -17,6 +17,10 @@ class ResourceDataService {
     findByDescription(description: string) {
         return http.get<Array<IResourceModel>>(`/resources/bydescription/${description}`);
     }
+
+    findByProviderId(id: string) {
+      return http.get<Array<IResourceModel>>(`/resources/byprovider/${id}`);
+  }
   
     create(data: IResourceModel) {
       return http.post<IResourceModel>("/resources", data);

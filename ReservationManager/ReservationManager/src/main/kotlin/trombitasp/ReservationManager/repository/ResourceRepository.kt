@@ -8,4 +8,5 @@ interface ResourceRepository: JpaRepository<Resource, Int> {
     fun findAllByNameContaining(name: String): List<Resource>
 
     fun findAllByDescriptionContaining(description: String): List<Resource>
+    fun findAllByResourceProviderId(id: String): List<Resource>
 }

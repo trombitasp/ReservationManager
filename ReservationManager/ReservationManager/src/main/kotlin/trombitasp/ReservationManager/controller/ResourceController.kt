@@ -23,6 +23,9 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
     @GetMapping("/resources/byname/{name}")
     fun findAllResourceByName(@PathVariable name: String) = resourceRepository.findAllByNameContaining(name)
 
+    @GetMapping("/resources/byprovider/{id}")
+    fun findAllResourceByProvider(@PathVariable id: String) = resourceRepository.findAllByResourceProviderId(id)
+
     @GetMapping("/resources/bydescription/{description}")
     fun findAllResourceByDescription(@PathVariable description: String) = resourceRepository.findAllByDescriptionContaining(description)
 
