@@ -3,7 +3,6 @@ package trombitasp.ReservationManager.controller
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import trombitasp.ReservationManager.model.Resource
 import trombitasp.ReservationManager.model.ResourceProvider
 import trombitasp.ReservationManager.repository.ResourceProviderRepository
 
@@ -22,7 +21,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
     }
 
     @GetMapping("/resourceproviders/byname/{name}")
-    fun findAllResourceProviderByName(@PathVariable name: String) = resourceProviderRepository.findAllByName(name)
+    fun findAllResourceProviderByName(@PathVariable name: String) = resourceProviderRepository.findAllByNameContaining(name)
 
     @GetMapping("/resourceproviders/bydescription/{description}")
     fun findAllResourceProviderByDescription(@PathVariable description: String) =

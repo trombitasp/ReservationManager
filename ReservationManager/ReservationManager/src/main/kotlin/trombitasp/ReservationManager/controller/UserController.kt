@@ -22,7 +22,7 @@ class UserController(private val userRepository: UserRepository) {
     }
 
     @GetMapping("/users/byname/{name}")
-    fun findAllUserByName(@PathVariable name: String) = userRepository.findAllByName(name)
+    fun findAllUserByName(@PathVariable name: String) = userRepository.findAllByNameContaining(name)
 
     @GetMapping("/users/byrole/{role}")
     fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
