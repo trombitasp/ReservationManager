@@ -20,6 +20,9 @@ class ReservationController(private val reservationRepository: ReservationReposi
         }.orElse(ResponseEntity.notFound().build())
     }
 
+    @GetMapping("/reservations/byuser/{id}")
+    fun findAllUserByName(@PathVariable id: String) = reservationRepository.findAllByUserId(id)
+
     @PostMapping("/reservations")
     fun saveReservation(@RequestBody reservation: Reservation) = reservationRepository.save(reservation)
 

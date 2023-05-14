@@ -5,4 +5,5 @@ import trombitasp.ReservationManager.model.Reservation
 
 interface ReservationRepository: JpaRepository<Reservation, Int> {
 
+    fun findAllByUserId(id: String): List<Reservation>
 }
