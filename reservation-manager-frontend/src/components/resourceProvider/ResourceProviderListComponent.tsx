@@ -91,16 +91,20 @@ export default class ResourceProviderList extends Component<Props, State>{
             currentIndex: -1
         });
 
-        ResourceProviderDataService.findByName(this.state.searchName)
-            .then((response: any) => {
-                this.setState({
-                    resourceProviders: response.data
+        if (typeof this.state.searchName === 'undefined' || this.state.searchName.length === 0) {
+            this.retrieveResourceProviders();
+        } else {
+            ResourceProviderDataService.findByName(this.state.searchName)
+                .then((response: any) => {
+                    this.setState({
+                        resourceProviders: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch((e: Error) => {
+                    console.log(e);
                 });
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+        }
     }
 
     render() {

@@ -86,16 +86,20 @@ export default class TutorialsList extends Component<Props, State>{
 			currentIndex: -1
 		});
 
-		UserDataService.findByName(this.state.searchName)
-			.then((response: any) => {
-				this.setState({
-					users: response.data
+		if (typeof this.state.searchName === 'undefined' || this.state.searchName.length === 0) {
+			this.retrieveUsers();
+		} else {
+			UserDataService.findByName(this.state.searchName)
+				.then((response: any) => {
+					this.setState({
+						users: response.data
+					});
+					console.log(response.data);
+				})
+				.catch((e: Error) => {
+					console.log(e);
 				});
-				console.log(response.data);
-			})
-			.catch((e: Error) => {
-				console.log(e);
-			});
+		}
 	}
 
 	render() {
@@ -126,14 +130,14 @@ export default class TutorialsList extends Component<Props, State>{
 					<h4>Felhasználók listája</h4>
 
 					<ul className="list-group">
-						{ users &&
+						{users &&
 							users.map((user: IUserModel, index: number) => (
 								<li
-									className={ "list-group-item " + (index === currentIndex ? "active" : "") }
-									onClick={ () => this.setCurrentUser(user, index) }
-									key={ index }
+									className={"list-group-item " + (index === currentIndex ? "active" : "")}
+									onClick={() => this.setCurrentUser(user, index)}
+									key={index}
 								>
-									{ user.name }
+									{user.name}
 								</li>
 							))}
 					</ul>
