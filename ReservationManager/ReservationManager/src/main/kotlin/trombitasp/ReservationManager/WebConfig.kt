@@ -22,7 +22,10 @@ import trombitasp.ReservationManager.security.services.UserDetailsServiceImpl
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity      // TODO ez kell-e
-class WebSecurityConfig {
+class WebConfig(
+//    private var userDetailsService: UserDetailsServiceImpl,
+//    private val unauthorizedHandler: AuthEntryPointJwt
+) {
     @Autowired
     var userDetailsService: UserDetailsServiceImpl? = null
 

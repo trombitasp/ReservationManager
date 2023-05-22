@@ -17,14 +17,15 @@ import java.io.IOException
 
 
 class AuthTokenFilter(
-//    @Autowired private val userDetailsService: UserDetailsServiceImpl,
-//    @Autowired private  val jwtUtils: JwtUtils
+//    private val userDetailsService: UserDetailsServiceImpl,
+//    private  val jwtUtils: JwtUtils
 ) : OncePerRequestFilter() {
     @Autowired
     private val jwtUtils: JwtUtils? = null
 
     @Autowired
     private val userDetailsService: UserDetailsServiceImpl? = null
+
     @Throws(ServletException::class, IOException::class)
     protected override fun doFilterInternal(
         request: HttpServletRequest,

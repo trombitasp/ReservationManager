@@ -12,10 +12,10 @@ import trombitasp.ReservationManager.repository.UserRepository
 
 @Service
 class UserDetailsServiceImpl(
-//    private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : UserDetailsService {
-    @Autowired
-    var userRepository: UserRepository? = null
+//    @Autowired
+//    var userRepository: UserRepository? = null
 
     @Transactional
     @Throws(UsernameNotFoundException::class)

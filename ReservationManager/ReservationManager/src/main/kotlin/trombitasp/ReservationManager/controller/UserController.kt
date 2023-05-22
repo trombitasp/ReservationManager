@@ -24,8 +24,8 @@ class UserController(private val userRepository: UserRepository) {
     @GetMapping("/users/byname/{name}")
     fun findAllUserByName(@PathVariable name: String) = userRepository.findAllByUsernameContaining(name)
 
-    @GetMapping("/users/byrole/{role}")
-    fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
+//    @GetMapping("/users/byrole/{role}")
+//    fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
 
     @PostMapping("/users")
     fun saveUser(@RequestBody user: User) = userRepository.save(user)
@@ -33,7 +33,7 @@ class UserController(private val userRepository: UserRepository) {
     @PutMapping("/users/{id}")
     fun updateUser(@PathVariable id: Int, @RequestBody user: User): ResponseEntity<User> {
         return userRepository.findById(id).map { existingUser ->
-            val updatedUser: User = existingUser.copy(username = user.username, roles = user.roles, /*reservations = user.reservations*/)
+            val updatedUser: User = existingUser.clone(/*username = user.username, roles = user.roles, email = user.email, password = user.password*/)
             ResponseEntity.ok().body(userRepository.save(updatedUser))
         }.orElse(ResponseEntity.notFound().build())
     }
