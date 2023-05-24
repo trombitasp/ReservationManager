@@ -16,7 +16,7 @@ class User: Cloneable {
 
     @Column(name = "username", unique = true)
     @NotBlank
-    @Size(max = 20)
+    @Size(min = 3, max = 20)
     var username: String? = null
 
     @NotBlank
@@ -26,7 +26,7 @@ class User: Cloneable {
     var email: String? = null
 
     @NotBlank
-    @Size(max = 120)
+    @Size(min = 6, max = 120)
     var password: String? = null
 
     @ManyToMany(fetch = FetchType.LAZY)
