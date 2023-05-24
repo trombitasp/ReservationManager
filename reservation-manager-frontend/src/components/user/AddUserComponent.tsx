@@ -19,8 +19,10 @@ export default class AddUser extends Component<Props, State> {
 
 		this.state = {
 			id: null,
-			name: "",
-			role: "default",
+			username: "",
+			password: "",
+			email: "",
+			roles: ["DEFAULT"],
 			//reservations: [],	// new Array<IReservationModel>(), ha a teljes reservation-öket eltároljuk id helyett
 			submitted: false
 		};
@@ -28,13 +30,13 @@ export default class AddUser extends Component<Props, State> {
 
 	onChangeName(e: ChangeEvent<HTMLInputElement>) {
 		this.setState({
-			name: e.target.value,
+			username: e.target.value,
 		});
 	}
 
 	onChangeRole(e: ChangeEvent<HTMLInputElement>) {
 		this.setState({
-			role: e.target.value,
+			//roles: e.target.value,		// TODO
 		});
 	}
 
@@ -46,8 +48,10 @@ export default class AddUser extends Component<Props, State> {
 
 	saveUser() {
 		const data: IUserModel = {
-			name: this.state.name,
-			role: this.state.role
+			username: this.state.username,
+			email: this.state.email,
+			password: this.state.password,
+			roles: this.state.roles
 			//reservations: this.state.reservations,
 		};
 
@@ -55,8 +59,10 @@ export default class AddUser extends Component<Props, State> {
 			.then((response: any) => {
 				this.setState({
 					id: response.data.id,
-					name: response.data.name,
-					role: response.data.role,
+					username: response.data.name,
+					email: response.data.email,
+					password: response.data.password,
+					roles: response.data.roles,
 					//reservations: response.data.reservations,
 					submitted: true
 				});
@@ -70,15 +76,17 @@ export default class AddUser extends Component<Props, State> {
 	newUser() {
 		this.setState({
 			id: null,
-			name: "",
-			role: "default",
+			username: "",
+			password: "",
+			email: "",
+			roles: ["DEFAULT"],
 			//reservations: [],
 			submitted: false
 		});
 	}
 
 	render() {
-		const { submitted, name, role } = this.state;
+		const { submitted, username, roles } = this.state;
 
 		return (
 		  <div className="submit-form">
@@ -92,30 +100,29 @@ export default class AddUser extends Component<Props, State> {
 			) : (
 			  <div>
 				<div className="form-group">
-				  <label htmlFor="name">Név</label>
+				  <label htmlFor="username">Név</label>
 				  <input
 					type="text"
 					className="form-control"
-					id="name"
+					id="username"
 					required
-					value={name}
+					value={username}
 					onChange={this.onChangeName}
-					name="name"
+					name="username"
 				  />
 				</div>
 				<div className="form-group">
-				  <label htmlFor="role">Felhasználói jog</label>
+				  <label htmlFor="roles">Felhasználói jog</label>
 				  <input
 					type="text"
 					className="form-control"
-					id="role"
+					id="roles"
 					required
-					value={role}
+					value={roles[0]/* TODO: nem text kell, hanem checkboxok mondjuk*/}
 					onChange={this.onChangeRole}
-					name="role"
+					name="roles"
 				  />
 				</div>
-
 	
 				<button onClick={this.saveUser} className="btn btn-success">
 				  Mentés

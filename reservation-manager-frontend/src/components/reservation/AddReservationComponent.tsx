@@ -6,6 +6,7 @@ import IUserModel from "../../models/UserModel";
 import IResourceModel from "../../models/ResourceModel";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
 import { withRouter, WithRouterProps } from "../../util/withRouter";
+import AuthService from "../../services/auth/AuthService";
 
 interface Params {
     id: string;
@@ -15,6 +16,8 @@ type Props = WithRouterProps<Params>;
 
 type State = IReservatonModel & {
     submitted: boolean
+    currentUser: IUserModel | null
+    redirect: string | null
 };
 
 class AddReservation extends Component<Props, State> {
@@ -33,7 +36,9 @@ class AddReservation extends Component<Props, State> {
             beginningOfReservation: new Date(),
             endOfReservation: new Date(),
             description: "",
-            submitted: false
+            submitted: false,
+            currentUser: this.newUser(),
+            redirect: null
         };
         this.setResourceById(this.props.match.params.id);
     }
@@ -61,11 +66,23 @@ class AddReservation extends Component<Props, State> {
 
     newUser() {
         let temp: IUserModel = {    // TODO: ehelyett 0, "", "", majd valahogyan el kell kérni a bejelentkezett felh.-t
-            id: 1,
-            name: "Trombitás Péter",
-            role: "admin"
+            id: -1,
+            username: "",
+            email: "",
+            password: "",
+            roles: ["DEFAULT"]
         };
         return temp;
+    }
+
+    componentDidMount() {
+        const user = AuthService.getCurrentUser();
+
+        if (!user) this.setState({ redirect: "/" });
+        this.setState({ 
+            currentUser: user, 
+            user: user 
+        })
     }
 
     setResourceById(id: string) {

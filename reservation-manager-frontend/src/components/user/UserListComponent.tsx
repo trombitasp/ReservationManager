@@ -137,7 +137,7 @@ export default class TutorialsList extends Component<Props, State>{
 									onClick={() => this.setCurrentUser(user, index)}
 									key={index}
 								>
-									{user.name}
+									{user.username}
 								</li>
 							))}
 					</ul>
@@ -156,13 +156,13 @@ export default class TutorialsList extends Component<Props, State>{
 								<label>
 									<strong>Név:</strong>
 								</label>{" "}
-								{currentUser.name}
+								{currentUser.username}
 							</div>
 							<div>
 								<label>
 									<strong>Felhasználói jog:</strong>
 								</label>{" "}
-								{currentUser.role}
+								{currentUser.roles}
 							</div>
 							<div>
 								<label>

@@ -28,8 +28,10 @@ class UserDetails extends Component<Props, State> {
         this.state = {
             currentUser: {
                 id: null,
-                name: "",
-                role: "default"
+                username: "",
+                email: "",
+                password: "",
+                roles: ["DEFAULT"]
             },
             message: "",
         };
@@ -45,7 +47,7 @@ class UserDetails extends Component<Props, State> {
             return {
                 currentUser: {
                     ...prevState.currentUser,
-                    name: name,
+                    username: name,
                 },
             };
         });
@@ -138,7 +140,7 @@ class UserDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="name"
-                                    value={currentUser.name}
+                                    value={currentUser.username}
                                     onChange={this.onChangeName}
                                 />
                             </div>
@@ -148,7 +150,7 @@ class UserDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="role"
-                                    value={currentUser.role}
+                                    value={currentUser.roles}
                                     onChange={this.onChangeRole}
                                 />
                             </div>
