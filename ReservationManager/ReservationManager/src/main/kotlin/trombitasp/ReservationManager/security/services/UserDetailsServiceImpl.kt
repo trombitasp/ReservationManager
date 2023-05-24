@@ -20,7 +20,7 @@ class UserDetailsServiceImpl(
     @Transactional
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository?.findByUsername(username)
+        val user = userRepository.findByUsername(username)
         if (user != null) {
             return UserDetailsImpl.build(user)
         } else {

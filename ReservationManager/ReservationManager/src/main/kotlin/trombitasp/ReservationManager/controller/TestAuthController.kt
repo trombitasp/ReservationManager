@@ -6,30 +6,34 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Az authentikáció tesztelésére létrehozott controller, éles működés során nincs használva.
+ * Az egyes endpointok csak a megfelelő jogosultságok (role-ok) birtokában elérhetők.
+ */
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
 class TestController {
     @GetMapping("/all")
     fun allAccess(): String {
-        return "Public Content."
+        return "publikus dolgok"
     }
 
     @GetMapping("/default")
     @PreAuthorize("hasAuthority('DEFAULT') or hasAuthority('LOGGED_IN') or hasAuthority('ADMIN')")
-    fun userAccess(): String {
-        return "Default user Content."
+    fun defaultAccess(): String {
+        return "Default jog dolgok"
     }
 
     @GetMapping("/logged_in")
     @PreAuthorize("hasAuthority('LOGGED_IN')")
-    fun moderatorAccess(): String {
-        return "LOGGED_IN content."
+    fun logged_inAccess(): String {
+        return "LOGGED_IN dolgok."
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     fun adminAccess(): String {
-        return "Admin content."
+        return "Admin dolgok."
     }
 }
