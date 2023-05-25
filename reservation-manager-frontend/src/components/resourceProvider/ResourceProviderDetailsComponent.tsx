@@ -3,6 +3,8 @@ import { withRouter, WithRouterProps } from "../../util/withRouter";
 
 import ResourceProviderDataService from "../../services/ResourceProviderService";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 interface RouterProps { // type for `match.params`
     id: string; // must be type `string` since value comes from the URL
@@ -17,6 +19,8 @@ type State = {
     minMinutes: string;
     maxHours: string;
     maxMinutes: string;
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 }
 
 class ResourceProviderDetails extends Component<Props, State> {
@@ -42,7 +46,9 @@ class ResourceProviderDetails extends Component<Props, State> {
             minHours: "00",
             minMinutes: "00",
             maxHours: "00",
-            maxMinutes: "00"
+            maxMinutes: "00",
+            role_admin: false,
+            currentUser: undefined
         };
     }
 
@@ -54,6 +60,14 @@ class ResourceProviderDetails extends Component<Props, State> {
             maxHours: this.state.currentProvider.maxReservationTime.getHours().toString(),
             maxMinutes: this.state.currentProvider.maxReservationTime.getMinutes().toString()
         })
+
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -163,7 +177,7 @@ class ResourceProviderDetails extends Component<Props, State> {
     }
 
     render() {
-        const { currentProvider } = this.state;
+        const { currentProvider, currentUser, role_admin } = this.state;
 
         return (
             <div>
@@ -178,6 +192,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                     className="form-control"
                                     id="name"
                                     required
+                                    disabled={!role_admin}
                                     value={currentProvider.name}
                                     onChange={this.onChangeName}
                                 />
@@ -189,6 +204,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                     className="form-control"
                                     id="minTime"
                                     required
+                                    disabled={!role_admin}
                                     value={`${this.toDoubleDigits(this.state.minHours)}:${this.toDoubleDigits(this.state.minMinutes)}`}
                                     onChange={this.onChangeMinTime}
                                 />
@@ -200,6 +216,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                                     className="form-control"
                                     id="maxTime"
                                     required
+                                    disabled={!role_admin}
                                     value={`${this.toDoubleDigits(this.state.maxHours)}:${this.toDoubleDigits(this.state.maxMinutes)}`}
                                     onChange={this.onChangeMaxTime}
                                 />
@@ -210,27 +227,42 @@ class ResourceProviderDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="description"
+                                    disabled={!role_admin}
                                     value={currentProvider.description}
                                     onChange={this.onChangeDescription}
                                 />
                             </div>
                         </form>
-                        <button
-                            type="submit"
-                            className="m-3 btn btn-sm btn-success"
-                            onClick={this.updateUser}>
-                            Mentés
-                        </button>
-                        <button
-                            className="m-3 btn btn-sm btn-danger"
-                            onClick={this.deleteProvider}>
-                            Törlés
-                        </button>
-                        <button
-                            className="m-3 btn btn-sm btn-secondary"
-                            onClick={this.props.history.back}>
-                            Mégsem
-                        </button>
+                        {(currentUser && role_admin) ? (
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="m-3 btn btn-sm btn-success"
+                                    onClick={this.updateUser}>
+                                    Mentés
+                                </button>
+                                <button
+                                    className="m-3 btn btn-sm btn-danger"
+                                    onClick={this.deleteProvider}>
+                                    Törlés
+                                </button>
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                Jelentkezz be további funkciókért!
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        )}
+
                         <p className="greenText">{this.state.message}</p>
                     </div>
                 ) : (

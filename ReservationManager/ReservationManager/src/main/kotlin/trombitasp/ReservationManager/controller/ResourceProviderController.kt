@@ -2,6 +2,7 @@ package trombitasp.ReservationManager.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import trombitasp.ReservationManager.model.ResourceProvider
 import trombitasp.ReservationManager.repository.ResourceProviderRepository
@@ -28,9 +29,11 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
         resourceProviderRepository.findAllByDescriptionContaining(description)
 
     @PostMapping("/resourceproviders")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun saveResourceProvider(@RequestBody resourceProvider: ResourceProvider) = resourceProviderRepository.save(resourceProvider)
 
     @PutMapping("/resourceproviders/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun updateResourceProvider(@PathVariable id: Int, @RequestBody resourceProvider: ResourceProvider): ResponseEntity<ResourceProvider> {
         return resourceProviderRepository.findById(id).map { existingResourceProvider ->
             val updatedResourceProvider: ResourceProvider = existingResourceProvider.copy(
@@ -44,6 +47,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
     }
 
     @DeleteMapping("/resourceproviders/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun deleteResourceProviderById(@PathVariable id: Int): ResponseEntity<Void> {
         return resourceProviderRepository.findById(id).map { r  ->
             resourceProviderRepository.delete(r)
