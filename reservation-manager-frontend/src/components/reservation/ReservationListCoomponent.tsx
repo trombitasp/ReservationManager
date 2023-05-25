@@ -172,9 +172,10 @@ class ReservationList extends Component<Props, State>{
                             className="form-control"
                             placeholder="Keresés ??? alapján"
                             value={searchName}
+                            onBlur={this.searchName}
                             onChange={this.onChangeSearchName}
                         />
-                        <div className="input-group-append">
+                        <div className="input-group-append mx-3">
                             <button
                                 className="btn btn-outline-secondary"
                                 type="button"
