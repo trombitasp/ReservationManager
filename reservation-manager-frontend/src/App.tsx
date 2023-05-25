@@ -67,67 +67,72 @@ class App extends Component<Props, State> {
 		return (
 			<div>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<Link to={"/"} className="navbar-brand">
-						Foglaláskezelő
-					</Link>
-					<div className="navbar-nav mr-auto">
-						<li className="nav-item">
-							<Link to={"/resourceproviders"} className="nav-link">
-								Szolgáltatók
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link to={"/resources"} className="nav-link">
-								Összes foglalható dolog
-							</Link>
-						</li>
-						{currentUser && (
-							<li className="nav-item">
-								<Link to={"/reservations/user/1"} className="nav-link">
-									Korábbi foglalásaid
-								</Link>
-							</li>
-						)}
-						{currentUser && role_admin && (
+					<div className="container-fluid">
+						<Link to={"/"} className="navbar-brand mr-0 mr-md-2">
+							Foglaláskezelő
+						</Link>
+						<div className='collapse navbar-collapse'>
+							<ul className="navbar-nav mr-auto mb-2 mb-lg-0">
+								<li className="nav-item">
+									<Link to={"/resourceproviders"} className="nav-link">
+										Szolgáltatók
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/resources"} className="nav-link">
+										Összes foglalható dolog
+									</Link>
+								</li>
+								{currentUser && (
+									<li className="nav-item">
+										<Link to={"/reservations/user/1"} className="nav-link">
+											Korábbi foglalásaid
+										</Link>
+									</li>
+								)}
+								{currentUser && role_admin && (
+									<li className="nav-item">
+										<Link to={"/users"} className="nav-link">
+											Felhasználók
+										</Link>
+									</li>
+								)}
+							</ul>
+						</div>
+						<ul className='navbar-nav d-flex'>
 							<li className="nav-item">
 								<Link to={"/users"} className="nav-link">
-									Felhasználók
+									Profil adatok / Bejelentkezés
 								</Link>
 							</li>
-						)}
-						<li className="nav-item">
-							<Link to={"/users"} className="nav-link">
-								Profil adatok / Bejelentkezés
-							</Link>
-						</li>
-						{currentUser ? (	// profil + logout  VAGY  login + singin
-							<div className="navbar-nav ml-auto">
-								<li className="nav-item">
-									<Link to={"/profile"} className="nav-link">
-										{currentUser.username}
-									</Link>
-								</li>
-								<li className="nav-item">
-									<a href="/login" className="nav-link" onClick={this.logOut}>
-										Kijelentkezés
-									</a>
-								</li>
-							</div>
-						) : (
-							<div className="navbar-nav ml-auto">
-								<li className="nav-item">
-									<Link to={"/login"} className="nav-link">
-										Bejelentkezés
-									</Link>
-								</li>
-								<li className="nav-item">
-									<Link to={"/register"} className="nav-link">
-										Regisztrálás
-									</Link>
-								</li>
-							</div>
-						)}
-						
+							{currentUser ? (	// profil + logout  VAGY  login + singin
+								<div className="navbar-nav ml-auto">
+									<li className="nav-item">
+										<Link to={"/profile"} className="nav-link">
+											{currentUser.username}
+										</Link>
+									</li>
+									<li className="nav-item">
+										<a href="/login" className="nav-link" onClick={this.logOut}>
+											Kijelentkezés
+										</a>
+									</li>
+								</div>
+							) : (
+								<div className="navbar-nav ml-auto">
+									<li className="nav-item">
+										<Link to={"/login"} className="nav-link">
+											Bejelentkezés
+										</Link>
+									</li>
+									<li className="nav-item">
+										<Link to={"/register"} className="nav-link">
+											Regisztrálás
+										</Link>
+									</li>
+								</div>
+							)}
+						</ul>
 					</div>
 				</nav>
 
@@ -142,9 +147,9 @@ class App extends Component<Props, State> {
 						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails />} />
 						<Route path="/resources/:id" element={<ResourceDetails />} />
 						<Route path="/reservations/user/:id" element={<ReservationList />} />
-						<Route path='/register' element={<Register/>}/>
-						<Route path='/profile' element={<Profile/>}/>
-						<Route path='/login' element={<Login/>}/>
+						<Route path='/register' element={<Register />} />
+						<Route path='/profile' element={<Profile />} />
+						<Route path='/login' element={<Login />} />
 					</Routes>
 				</div>
 			</div>
