@@ -16,6 +16,7 @@ import IUserModel from './models/UserModel';
 import Register from './components/user/RegisterComponent';
 import Profile from './components/user/ProfileComponent';
 import Login from './components/user/LoginComponent';
+import AddResourceProvider from './components/resourceProvider/AddResourceProviderComponent';
 
 
 type Props = {};
@@ -149,6 +150,7 @@ class App extends Component<Props, State> {
 						<Route key={"8"} path='/register' element={<Register />} />
 						<Route key={"9"} path='/profile' element={<Profile />} />
 						<Route key={"10"} path='/login' element={<Login />} />
+						<Route key={"11"} path='/resourceproviders/new' element={<AddResourceProvider />} />
 					</Routes>
 				</div>
 			</div>

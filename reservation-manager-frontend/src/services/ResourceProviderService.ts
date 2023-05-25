@@ -1,5 +1,6 @@
 import http from "../util/util";
 import IResourceProviderModel from "../models/ResourceProviderModel"
+import authHeader from "./auth/AuthHeader";
 
 class ResourceProviderDataService {
     getAll() {
@@ -19,7 +20,7 @@ class ResourceProviderDataService {
     }
   
     create(data: IResourceProviderModel) {
-      return http.post<IResourceProviderModel>("/resourceproviders", data);
+      return http.post<IResourceProviderModel>("/resourceproviders", data, {headers: authHeader()});
     }
   
     update(data: IResourceProviderModel, id: Number) {

@@ -133,9 +133,10 @@ export default class ResourceProviderList extends Component<Props, State>{
                             className="form-control"
                             placeholder="Keresés név alapján"
                             value={searchName}
+                            onBlur={this.searchName}
                             onChange={this.onChangeSearchName}
                         />
-                        <div className="input-group-append">
+                        <div className="input-group-append mx-3">
                             <button
                                 className="btn btn-outline-secondary"
                                 type="button"
@@ -147,7 +148,13 @@ export default class ResourceProviderList extends Component<Props, State>{
                 </div>
                 <div className="col-md-6">
                     <h4>Szolgáltatók listája</h4>
-
+                    {currentUser && role_admin && (
+                        <Link
+                            to={"/resourceproviders/new"}
+                            className="m-3 btn btn-sm btn-primary">
+                            Új szolgáltató felvétele
+                        </Link>
+                    )}
                     <ul className="list-group">
                         {resourceProviders &&
                             resourceProviders.map((resourceProvider: IResourceProviderModel, index: number) => (
@@ -194,12 +201,6 @@ export default class ResourceProviderList extends Component<Props, State>{
                                 </label>{" "}
                                 {`${currentProvider.maxReservationTime.getHours()} óra ${currentProvider.maxReservationTime.getMinutes()} perc ${currentProvider.maxReservationTime.getSeconds()} másodperc`}
                             </div>
-                            <div>
-                                <label>
-                                    <strong>Foglalható erőforrások száma:</strong>
-                                </label>{" "}
-                                {"azok az erőforrások amiknek a providere ez > 0" ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
-                            </div>
 
                             {currentUser && role_admin && (
                                 <Link
@@ -217,7 +218,7 @@ export default class ResourceProviderList extends Component<Props, State>{
                     ) : (
                         <div>
                             <br />
-                            <p>Kattints az egyik szolgáltatóra a listából!</p>
+                            <p>Kattints az egyik szolgáltatóra a listából vagy vegyél fel újat!</p>
                         </div>
                     )}
                 </div>

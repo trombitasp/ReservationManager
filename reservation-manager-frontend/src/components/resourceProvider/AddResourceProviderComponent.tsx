@@ -1,11 +1,15 @@
 import { Component, ChangeEvent } from "react";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
 import ResourceProviderDataService from "../../services/ResourceProviderService";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 type Props = {};
 
 type State = IResourceProviderModel & {
     submitted: boolean;
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 };
 
 export default class AddResourceProvider extends Component<Props, State> {
@@ -22,11 +26,23 @@ export default class AddResourceProvider extends Component<Props, State> {
             id: null,
             name: "",
             minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),     // 1 óra, 2000.01.31-et ki kell vonni belőle (mySQL nem tárol kiebbeket)
-            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            maxReservationTime: new Date(2000, 1, 31, 2, 0, 0, 0),
             description: "",
             //resources: [],
-            submitted: false
+            submitted: false,
+            role_admin: false,
+            currentUser: undefined
         };
+    }
+
+    componentDidMount() {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -93,15 +109,22 @@ export default class AddResourceProvider extends Component<Props, State> {
             id: null,
             name: "",
             minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
-            maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
+            maxReservationTime: new Date(2000, 1, 31, 2, 0, 0, 0),
             description: "",
             //resources: [],
             submitted: false
         });
     }
 
+    toDoubleDigits(num: string): string {
+        if (num.length > 1) {
+            return num;
+        }
+        return "0" + num;
+    }
+
     render() {
-        const { submitted, name, minReservationTime, maxReservationTime, description } = this.state;
+        const { submitted, name, minReservationTime, maxReservationTime, description, currentUser, role_admin } = this.state;
 
         return (
             <div className="submit-form">
@@ -121,6 +144,7 @@ export default class AddResourceProvider extends Component<Props, State> {
                                 className="form-control"
                                 id="name"
                                 required
+                                disabled={!(currentUser && role_admin)}
                                 value={name}
                                 onChange={this.onChangeName}
                                 name="name"
@@ -133,7 +157,8 @@ export default class AddResourceProvider extends Component<Props, State> {
                                 className="form-control"
                                 id="minTime"
                                 required
-                                value={minReservationTime.getHours.toString() + ":" + minReservationTime.getMinutes.toString()}
+                                disabled={!(currentUser && role_admin)}
+                                value={this.toDoubleDigits(minReservationTime.getHours().toString()) + ":" + this.toDoubleDigits(minReservationTime.getMinutes().toString())}
                                 onChange={this.onChangeMinTime}
                                 name="minTime"
                             />
@@ -145,7 +170,8 @@ export default class AddResourceProvider extends Component<Props, State> {
                                 className="form-control"
                                 id="maxTime"
                                 required
-                                value={maxReservationTime.getHours.toString() + ":" + maxReservationTime.getMinutes.toString()}
+                                disabled={!(currentUser && role_admin)}
+                                value={this.toDoubleDigits(maxReservationTime.getHours().toString()) + ":" + this.toDoubleDigits(maxReservationTime.getMinutes().toString())}
                                 onChange={this.onChangeMaxTime}
                                 name="maxTime"
                             />
@@ -157,15 +183,20 @@ export default class AddResourceProvider extends Component<Props, State> {
                                 className="form-control"
                                 id="description"
                                 required
+                                disabled={!(currentUser && role_admin)}
                                 value={description}
                                 onChange={this.onChangeDescription}
                                 name="description"
                             />
                         </div>
+                        {(currentUser && role_admin) ? (
+                            <button onClick={this.saveResourceProvider} className="btn btn-success">
+                                Mentés
+                            </button>
+                        ) : (
+                            <div className="m-3">Új szolgáltató felvételéhez admin jogosultságú bejelentkezés szükséges!</div>
+                        )}
 
-                        <button onClick={this.saveResourceProvider} className="btn btn-success">
-                            Mentés
-                        </button>
                     </div>
                 )}
             </div>
