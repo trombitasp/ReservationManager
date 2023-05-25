@@ -49,7 +49,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
     @DeleteMapping("/resourceproviders/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     fun deleteResourceProviderById(@PathVariable id: Int): ResponseEntity<Void> {
-        return resourceProviderRepository.findById(id).map { r  ->
+        return resourceProviderRepository.findById(id).map { r ->
             resourceProviderRepository.delete(r)
             ResponseEntity<Void>(HttpStatus.OK)
         }.orElse(ResponseEntity.notFound().build())
