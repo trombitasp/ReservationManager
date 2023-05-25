@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -48,7 +47,6 @@ class App extends Component<Props, State> {
 				role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
 			});
 		}
-
 		//EventBus.on("logout", this.logOut);	TODO: ez kell-e?
 	}
 
@@ -138,18 +136,18 @@ class App extends Component<Props, State> {
 
 				<div className="container mt-3">
 					<Routes>
-						{['/', '/resourceproviders'].map(path => <Route path={path} element={<ResourceProviderList />} />)}
-						<Route path="/adduser" element={<AddUser />} />
-						<Route path="/users" element={<UserList />} />
-						{['/resources/provider/:id', '/resources'].map(path => <Route path={path} element={<ResourceList />} />)}
-						<Route path="/reservations/resource/:id" element={<AddReservation />} />
-						<Route path="/users/:id" element={<UserDetail />} />
-						<Route path="/resourceproviders/:id" element={<ResourceProviderDetails />} />
-						<Route path="/resources/:id" element={<ResourceDetails />} />
-						<Route path="/reservations/user/:id" element={<ReservationList />} />
-						<Route path='/register' element={<Register />} />
-						<Route path='/profile' element={<Profile />} />
-						<Route path='/login' element={<Login />} />
+						{['/', '/resourceproviders'].map(path => <Route key={"0"} path={path} element={<ResourceProviderList />} />)}
+						<Route key={"1"} path="/adduser" element={<AddUser />} />
+						<Route key={"2"} path="/users" element={<UserList />} />
+						{['/resources/provider/:id', '/resources'].map(path => <Route key={"01"} path={path} element={<ResourceList />} />)}
+						<Route key={"3"} path="/reservations/resource/:id" element={<AddReservation />} />
+						<Route key={"4"} path="/users/:id" element={<UserDetail />} />
+						<Route key={"5"} path="/resourceproviders/:id" element={<ResourceProviderDetails />} />
+						<Route key={"6"} path="/resources/:id" element={<ResourceDetails />} />
+						<Route key={"7"} path="/reservations/user/:id" element={<ReservationList />} />
+						<Route key={"8"} path='/register' element={<Register />} />
+						<Route key={"9"} path='/profile' element={<Profile />} />
+						<Route key={"10"} path='/login' element={<Login />} />
 					</Routes>
 				</div>
 			</div>

@@ -2,7 +2,6 @@ import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logo from "../../logo.svg"
 
 import AuthService from "../../services/auth/AuthService";
 
@@ -34,13 +33,14 @@ export default class Login extends Component<Props, State> {
         const currentUser = AuthService.getCurrentUser();
 
         if (currentUser) {
-            this.setState({ /*redirect: "/profile" */});
+            this.setState({ redirect: "/profile" });
         };
     }
 
-    componentWillUnmount() {
-        window.location.reload();
-    }
+    /*componentWillUnmount() {      // ne használd a componentWillUnmount-ot, mert egyből meghívódik valamiért, és egyből reload-olna
+        console.log('redirect1');
+        //window.location.reload();
+    }*/
 
     validationSchema() {
         return Yup.object().shape({
@@ -61,7 +61,7 @@ export default class Login extends Component<Props, State> {
         AuthService.login(username, password).then(
             () => {
                 this.setState({
-                    //redirect: "/profile"
+                    redirect: "/profile"
                 });
             },
             error => {

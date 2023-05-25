@@ -1,6 +1,8 @@
 package trombitasp.ReservationManager.controller
 
 import jakarta.validation.Valid
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -60,6 +62,7 @@ class AuthController(
         val roles: List<String> = userDetails.authorities.stream()
             .map { item: GrantedAuthority -> item.authority }
             .collect(Collectors.toList())
+
         return ResponseEntity.ok<Any>(
             JwtResponse(
                 jwt,

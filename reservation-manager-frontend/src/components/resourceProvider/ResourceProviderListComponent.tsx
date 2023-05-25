@@ -3,6 +3,8 @@ import ResourceProviderDataService from "../../services/ResourceProviderService"
 import { Link, Route, Routes } from "react-router-dom";
 import IResourceProviderModel from '../../models/ResourceProviderModel';
 import ResourceList from "../resource/ResourceListComponent";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 type Props = {};
 
@@ -10,7 +12,9 @@ type State = {
     resourceProviders: Array<IResourceProviderModel>,
     currentProvider: IResourceProviderModel | null,
     currentIndex: number,
-    searchName: string
+    searchName: string,
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 };
 
 export default class ResourceProviderList extends Component<Props, State>{
@@ -27,12 +31,23 @@ export default class ResourceProviderList extends Component<Props, State>{
             resourceProviders: [],
             currentProvider: null,
             currentIndex: -1,
-            searchName: ""
+            searchName: "",
+            currentUser: undefined,
+            role_admin: false
         };
     }
 
     componentDidMount() {
         this.retrieveResourceProviders();
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                // role_logged_in: user.roles.includes("LOGGED_IN") || user.roles.includes("logged_in"),
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
+
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -108,7 +123,7 @@ export default class ResourceProviderList extends Component<Props, State>{
     }
 
     render() {
-        const { searchName, resourceProviders, currentProvider, currentIndex } = this.state;
+        const { searchName, resourceProviders, currentProvider, currentIndex, currentUser, role_admin } = this.state;
 
         return (
             <div className="list row">
@@ -188,11 +203,13 @@ export default class ResourceProviderList extends Component<Props, State>{
                                 {"azok az erőforrások amiknek a providere ez > 0" ? "TODO adott szolgáltató erőforrásainak lekérése" : "Nincs erőforrás."}
                             </div>
 
-                            <Link
-                                to={"/resourceproviders/" + currentProvider.id}
-                                className="m-3 btn btn-sm btn-warning">
-                                Módosít
-                            </Link>
+                            {currentUser && role_admin && (
+                                <Link
+                                    to={"/resourceproviders/" + currentProvider.id}
+                                    className="m-3 btn btn-sm btn-warning">
+                                    Módosít
+                                </Link>
+                            )}
                             <Link
                                 to={"/resources/provider/" + currentProvider.id}
                                 className="m-3 btn btn-sm btn-success">
