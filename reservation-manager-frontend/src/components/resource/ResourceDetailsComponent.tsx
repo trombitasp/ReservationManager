@@ -5,6 +5,8 @@ import ResourceDataService from "../../services/ResourceService";
 import ResourceProviderDataService from "../../services/ResourceProviderService";
 import IResourceModel from "../../models/ResourceModel";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 interface RouterProps { // type for `match.params`
     id: string; // must be type `string` since value comes from the URL
@@ -15,6 +17,8 @@ type Props = WithRouterProps<RouterProps>;
 type State = {
     currentResource: IResourceModel;
     message: string;
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 }
 
 class ResourceDetails extends Component<Props, State> {
@@ -35,6 +39,8 @@ class ResourceDetails extends Component<Props, State> {
                 resourceProvider: this.newResourceProvider()
             },
             message: "",
+            role_admin: false,
+            currentUser: undefined
         };
 
     }
@@ -52,6 +58,14 @@ class ResourceDetails extends Component<Props, State> {
 
     componentDidMount() {
         this.getResource(this.props.match.params.id);
+
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
     }
 
     onChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -115,7 +129,7 @@ class ResourceDetails extends Component<Props, State> {
     }
 
     render() {
-        const { currentResource } = this.state;
+        const { currentResource, currentUser, role_admin } = this.state;
         return (
             <div>
                 {currentResource ? (
@@ -129,6 +143,7 @@ class ResourceDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="name"
+                                    disabled={!currentUser || !role_admin}
                                     value={currentResource.name}
                                     onChange={this.onChangeName}
                                 />
@@ -139,27 +154,41 @@ class ResourceDetails extends Component<Props, State> {
                                     type="text"
                                     className="form-control"
                                     id="role"
+                                    disabled={!currentUser || !role_admin}
                                     value={currentResource.description}
                                     onChange={this.onChangeDescription}
                                 />
                             </div>
                         </form>
-                        <button
-                            type="submit"
-                            className="m-3 btn btn-sm btn-success"
-                            onClick={this.updateResource}>
-                            Mentés
-                        </button>
-                        <button
-                            className="m-3 btn btn-sm btn-danger"
-                            onClick={this.deleteResource}>
-                            Törlés
-                        </button>
-                        <button
-                            className="m-3 btn btn-sm btn-secondary"
-                            onClick={this.props.history.back}>
-                            Mégsem
-                        </button>
+                        {(currentUser && role_admin) ? (
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="m-3 btn btn-sm btn-success"
+                                    onClick={this.updateResource}>
+                                    Mentés
+                                </button>
+                                <button
+                                    className="m-3 btn btn-sm btn-danger"
+                                    onClick={this.deleteResource}>
+                                    Törlés
+                                </button>
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                Jelentkezz be további funkciókért!
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        )}
                         <p className="greenText">{this.state.message}</p>
                     </div>
                 ) : (

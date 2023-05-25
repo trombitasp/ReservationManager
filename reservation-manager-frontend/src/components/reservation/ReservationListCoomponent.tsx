@@ -1,11 +1,12 @@
 import { Component, ChangeEvent } from "react";
 import ResourceDataService from "../../services/ResourceService";
 import ReservationDataService from "../../services/ReservationService";
-import { Link } from "react-router-dom";
 import IReservationModel from '../../models/ReservationModel';
 import IResourceModel from "../../models/ResourceModel";
 import { withRouter, WithRouterProps } from "../../util/withRouter";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 interface Params {
     id: string;
@@ -19,6 +20,9 @@ type State = {
     currentIndex: number,
     searchName: string,
     resource: IResourceModel,
+    currentUser: IUserModel | undefined,
+    role_admin: boolean,
+    role_logged_in: boolean
 };
 
 class ReservationList extends Component<Props, State>{
@@ -36,7 +40,10 @@ class ReservationList extends Component<Props, State>{
             currentReservation: null,
             currentIndex: -1,
             searchName: "",
-            resource: this.newResource()
+            resource: this.newResource(),
+            currentUser: undefined,
+            role_admin: false,
+            role_logged_in: false
         };
         //this.setResourceById(this.props.match.params.id);
     }
@@ -61,9 +68,18 @@ class ReservationList extends Component<Props, State>{
         };
         return temp;
     }
-    
+
     componentDidMount() {
         this.retrieveReservationsById(this.props.match.params.id);
+
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_logged_in: user.roles.includes("LOGGED_IN") || user.roles.includes("logged_in"),
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -145,7 +161,7 @@ class ReservationList extends Component<Props, State>{
     }
 
     render() {
-        const { searchName, reservations, currentReservation, currentIndex } = this.state;
+        const { searchName, reservations, currentReservation, currentIndex, currentUser, role_admin, role_logged_in } = this.state;
 
         return (
             <div className="list row">
@@ -170,24 +186,23 @@ class ReservationList extends Component<Props, State>{
                 </div>
                 <div className="col-md-6">
                     <h4>A Te eddigi foglalásaid </h4>
-
                     <ul className="list-group">
                         {reservations &&
                             reservations.map((reservation: IReservationModel, index: number) => (
-                                <li
-                                    className={"list-group-item " + (index === currentIndex ? "active" : "")}
+                                <li className={"list-group-item " + (index === currentIndex ? "active" : "")}
                                     onClick={() => this.setCurrentResource(reservation, index)}
-                                    key={index}
-                                >
+                                    key={index}>
                                     {reservation.description}
                                 </li>
                             ))}
                     </ul>
-                    <button
-                        className="m-3 btn btn-sm btn-danger"
-                        onClick={this.removeAllTutorials} >
-                        Összes foglalási előzmény törlése
-                    </button>
+                    {currentUser && (role_admin || role_logged_in) && (
+                        <button
+                            className="m-3 btn btn-sm btn-danger"
+                            onClick={this.removeAllTutorials} >
+                            Összes foglalási előzmény törlése
+                        </button>
+                    )}
                 </div>
                 <div className="col-md-6">
                     {currentReservation ? (

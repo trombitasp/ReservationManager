@@ -47,7 +47,6 @@ export default class ResourceProviderList extends Component<Props, State>{
                 role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
             });
         }
-
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -152,21 +151,20 @@ export default class ResourceProviderList extends Component<Props, State>{
                     <ul className="list-group">
                         {resourceProviders &&
                             resourceProviders.map((resourceProvider: IResourceProviderModel, index: number) => (
-                                <li
-                                    className={"list-group-item " + (index === currentIndex ? "active" : "")}
+                                <li className={"list-group-item " + (index === currentIndex ? "active" : "")}
                                     onClick={() => this.setCurrentProvider(resourceProvider, index)}
-                                    key={index}
-                                >
+                                    key={index}>
                                     {resourceProvider.name}
                                 </li>
                             ))}
                     </ul>
-
-                    <button
-                        className="m-3 btn btn-sm btn-danger"
-                        onClick={this.removeAllTutorials} >
-                        Összes szolgáltató törlése
-                    </button>
+                    {role_admin && currentUser && (
+                        <button
+                            className="m-3 btn btn-sm btn-danger"
+                            onClick={this.removeAllTutorials} >
+                            Összes szolgáltató törlése
+                        </button>
+                    )}
                 </div>
                 <div className="col-md-6">
                     {currentProvider ? (

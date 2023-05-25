@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import IResourceModel from '../../models/ResourceModel';
 import IResourceProviderModel from "../../models/ResourceProviderModel";
 import { withRouter, WithRouterProps } from "../../util/withRouter";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
 interface Params {
     id: string;
@@ -17,7 +19,9 @@ type State = {
     currentResource: IResourceModel | null,
     currentIndex: number,
     searchName: string,
-    provider: IResourceProviderModel
+    provider: IResourceProviderModel,
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 };
 
 class ResourceList extends Component<Props, State>{
@@ -35,7 +39,9 @@ class ResourceList extends Component<Props, State>{
             currentResource: null,
             currentIndex: -1,
             searchName: "",
-            provider: this.defaultProvider()
+            provider: this.defaultProvider(),
+            currentUser: undefined,
+            role_admin: false
         };
         this.getProviderById(this.props.match.params.id);
     }
@@ -52,6 +58,14 @@ class ResourceList extends Component<Props, State>{
     }
     componentDidMount() {
         this.retrieveResources();
+
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
     }
 
     onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -62,7 +76,7 @@ class ResourceList extends Component<Props, State>{
     }
 
     getProviderById(id: string) {
-        if (typeof id ==='undefined' || id.length === 0) {  // ha nincs id, akkor az összes providert meg kell jeleníteni
+        if (typeof id === 'undefined' || id.length === 0) {  // ha nincs id, akkor az összes providert meg kell jeleníteni
             return;
         }
         ResourceProviderDataService.findById(id)
@@ -139,7 +153,7 @@ class ResourceList extends Component<Props, State>{
     }
 
     render() {
-        const { searchName, resources, currentResource, currentIndex } = this.state;
+        const { searchName, resources, currentResource, currentIndex, currentUser, role_admin } = this.state;
 
         return (
             <div className="list row">
@@ -172,20 +186,20 @@ class ResourceList extends Component<Props, State>{
                     <ul className="list-group">
                         {resources &&
                             resources.map((resourceProvider: IResourceModel, index: number) => (
-                                <li
-                                    className={"list-group-item " + (index === currentIndex ? "active" : "")}
+                                <li className={"list-group-item " + (index === currentIndex ? "active" : "")}
                                     onClick={() => this.setCurrentResource(resourceProvider, index)}
-                                    key={index}
-                                >
+                                    key={index}>
                                     {resourceProvider.name}
                                 </li>
                             ))}
                     </ul>
-                    <button
-                        className="m-3 btn btn-sm btn-danger"
-                        onClick={this.removeAllTutorials} >
-                        Összes erőforrás törlése
-                    </button>
+                    {currentUser && role_admin && (
+                        <button
+                            className="m-3 btn btn-sm btn-danger"
+                            onClick={this.removeAllTutorials} >
+                            Összes erőforrás törlése
+                        </button>
+                    )}
                 </div>
                 <div className="col-md-6">
                     {currentResource ? (
@@ -203,11 +217,13 @@ class ResourceList extends Component<Props, State>{
                                 </label>{" "}
                                 {currentResource.description}
                             </div>
-                            <Link
-                                to={"/resources/" + currentResource.id}
-                                className="m-3 btn btn-sm btn-warning">
-                                Módosít
-                            </Link>
+                            {currentUser && role_admin && (
+                                <Link
+                                    to={"/resources/" + currentResource.id}
+                                    className="m-3 btn btn-sm btn-warning">
+                                    Módosít
+                                </Link>
+                            )}
                             <Link
                                 to={"/reservations/resource/" + currentResource.id}
                                 className="m-3 btn btn-sm btn-success">

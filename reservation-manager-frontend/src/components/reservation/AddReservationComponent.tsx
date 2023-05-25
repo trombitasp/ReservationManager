@@ -18,6 +18,8 @@ type State = IReservatonModel & {
     submitted: boolean
     currentUser: IUserModel | null
     redirect: string | null
+    role_admin: boolean
+    role_logged_in: boolean
 };
 
 class AddReservation extends Component<Props, State> {
@@ -38,7 +40,9 @@ class AddReservation extends Component<Props, State> {
             description: "",
             submitted: false,
             currentUser: this.newUser(),
-            redirect: null
+            redirect: null,
+            role_admin: false,
+            role_logged_in: false
         };
         this.setResourceById(this.props.match.params.id);
     }
@@ -79,9 +83,11 @@ class AddReservation extends Component<Props, State> {
         const user = AuthService.getCurrentUser();
 
         if (!user) this.setState({ redirect: "/" });
-        this.setState({ 
-            currentUser: user, 
-            user: user 
+        this.setState({
+            currentUser: user,
+            user: user,
+            role_logged_in: user.roles.includes("LOGGED_IN") || user.roles.includes("logged_in"),
+            role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
         })
     }
 
@@ -166,25 +172,25 @@ class AddReservation extends Component<Props, State> {
 
     getDateTime_yyyyMMddhhmm(date: Date): string {
         var months: string;
-        if (date.getMonth() > 9){
+        if (date.getMonth() > 9) {
             months = date.getMonth().toString();
         } else {
             months = `0${date.getMonth().toString()}`;
         }
         var days: string;
-        if (date.getDay() > 9){
+        if (date.getDay() > 9) {
             days = date.getDay().toString();
         } else {
             days = `0${date.getDay().toString()}`;
         }
         var hours: string;
-        if (date.getHours() > 9){
+        if (date.getHours() > 9) {
             hours = date.getHours().toString();
         } else {
             hours = `0${date.getHours().toString()}`;
         }
         var minutes: string;
-        if (date.getMinutes() > 9){
+        if (date.getMinutes() > 9) {
             minutes = date.getMinutes().toString();
         } else {
             minutes = `0${date.getMinutes().toString()}`;
@@ -193,7 +199,7 @@ class AddReservation extends Component<Props, State> {
     }
 
     render() {
-        const { submitted, beginningOfReservation, endOfReservation, description } = this.state;
+        const { submitted, beginningOfReservation, endOfReservation, description, currentUser, role_admin, role_logged_in } = this.state;
 
         return (
             <div className="submit-form">
@@ -215,6 +221,7 @@ class AddReservation extends Component<Props, State> {
                                 className="form-control"
                                 id="beginning"
                                 required
+                                disabled={!(currentUser && (role_admin || role_logged_in))}
                                 value={this.getDateTime_yyyyMMddhhmm(beginningOfReservation)}
                                 onChange={this.onChangeBeginningOfReservation}
                                 name="beginning"
@@ -227,6 +234,7 @@ class AddReservation extends Component<Props, State> {
                                 className="form-control"
                                 id="end"
                                 required
+                                disabled={!(currentUser && (role_admin || role_logged_in))}
                                 value={this.getDateTime_yyyyMMddhhmm(endOfReservation)}
                                 onChange={this.onChangeEndOfReservation}
                                 name="end"
@@ -239,15 +247,33 @@ class AddReservation extends Component<Props, State> {
                                 className="form-control"
                                 id="name"
                                 required
+                                disabled={!(currentUser && (role_admin || role_logged_in))}
                                 value={description}
                                 onChange={this.onChangeDescription}
                                 name="name"
                             />
                         </div>
-
-                        <button onClick={this.saveReservation} className="btn btn-success">
-                            Mentés
-                        </button>
+                        {(currentUser && (role_admin || role_logged_in)) ? (
+                            <div>
+                                <button onClick={this.saveReservation} className="btn btn-sm btn-success">
+                                    Mentés
+                                </button>
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                Jelentkezz be további funkciókért!
+                                <button
+                                    className="m-3 btn btn-sm btn-secondary"
+                                    onClick={this.props.history.back}>
+                                    Mégsem
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
