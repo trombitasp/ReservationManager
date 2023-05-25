@@ -254,8 +254,8 @@ class AddReservation extends Component<Props, State> {
                             />
                         </div>
                         {(currentUser && (role_admin || role_logged_in)) ? (
-                            <div>
-                                <button onClick={this.saveReservation} className="btn btn-sm btn-success">
+                            <div className="d-flex justify-content-center">
+                                <button onClick={this.saveReservation} className="m-3 btn btn-sm btn-success">
                                     Mentés
                                 </button>
                                 <button

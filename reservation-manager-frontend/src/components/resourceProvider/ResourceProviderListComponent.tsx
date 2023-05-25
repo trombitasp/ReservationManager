@@ -204,7 +204,7 @@ export default class ResourceProviderList extends Component<Props, State>{
                             {currentUser && role_admin && (
                                 <Link
                                     to={"/resourceproviders/" + currentProvider.id}
-                                    className="m-3 btn btn-sm btn-warning">
+                                    className="btn btn-sm btn-warning">
                                     Módosít
                                 </Link>
                             )}

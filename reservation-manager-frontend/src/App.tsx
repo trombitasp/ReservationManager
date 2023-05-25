@@ -57,6 +57,7 @@ class App extends Component<Props, State> {
 			role_admin: false,
 			currentUser: undefined,
 		});
+		window.location.reload();
 	}
 
 	render() {

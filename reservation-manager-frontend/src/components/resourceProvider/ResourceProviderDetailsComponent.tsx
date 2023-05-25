@@ -234,7 +234,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                             </div>
                         </form>
                         {(currentUser && role_admin) ? (
-                            <div>
+                            <div className="d-flex justify-content-center">
                                 <button
                                     type="submit"
                                     className="m-3 btn btn-sm btn-success"

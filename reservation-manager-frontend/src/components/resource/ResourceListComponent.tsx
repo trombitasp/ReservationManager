@@ -220,7 +220,7 @@ class ResourceList extends Component<Props, State>{
                             {currentUser && role_admin && (
                                 <Link
                                     to={"/resources/" + currentResource.id}
-                                    className="m-3 btn btn-sm btn-warning">
+                                    className="btn btn-sm btn-warning">
                                     Módosít
                                 </Link>
                             )}
