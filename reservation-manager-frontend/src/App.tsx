@@ -17,7 +17,7 @@ import Register from './components/user/RegisterComponent';
 import Profile from './components/user/ProfileComponent';
 import Login from './components/user/LoginComponent';
 import AddResourceProvider from './components/resourceProvider/AddResourceProviderComponent';
-
+import AddResource from './components/resource/AddResourceComponent';
 
 type Props = {};
 
@@ -151,6 +151,7 @@ class App extends Component<Props, State> {
 						<Route key={"9"} path='/profile' element={<Profile />} />
 						<Route key={"10"} path='/login' element={<Login />} />
 						<Route key={"11"} path='/resourceproviders/new' element={<AddResourceProvider />} />
+						<Route key={"12"} path='/resources/new/:id' element={<AddResource />} />
 					</Routes>
 				</div>
 			</div>

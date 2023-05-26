@@ -128,6 +128,7 @@ export default class AddResourceProvider extends Component<Props, State> {
 
         return (
             <div className="submit-form">
+                <h4>Új szolgáltató felvétele</h4>
                 {submitted ? (
                     <div>
                         <h4>A szolgáltató sikeresen mentésre került.</h4>

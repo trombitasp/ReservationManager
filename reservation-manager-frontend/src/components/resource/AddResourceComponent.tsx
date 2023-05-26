@@ -2,14 +2,24 @@ import { Component, ChangeEvent } from "react";
 import IResourceModel from "../../models/ResourceModel";
 import ResourceDataService from "../../services/ResourceService";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
+import ResourceProviderDataService from "../../services/ResourceProviderService";
+import { withRouter, WithRouterProps } from "../../util/withRouter";
+import IUserModel from "../../models/UserModel";
+import AuthService from "../../services/auth/AuthService";
 
-type Props = {};
+interface Params {
+    id: string;
+}
+
+type Props = WithRouterProps<Params>;
 
 type State = IResourceModel & {
-    submitted: boolean;
+    submitted: boolean,
+    currentUser: IUserModel | undefined,
+    role_admin: boolean
 };
 
-export default class AddResource extends Component<Props, State> {
+class AddResource extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.onChangeName = this.onChangeName.bind(this);
@@ -23,9 +33,38 @@ export default class AddResource extends Component<Props, State> {
             name: "",
             description: "",
             resourceProvider: this.newResourceProvider(),
-            //reservation: -1,
-            submitted: false
+            submitted: false,
+            currentUser: undefined,
+            role_admin: false
         };
+        
+    }
+
+    componentDidMount() {
+        this.getProviderById(this.props.match.params.id);
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            this.setState({
+                currentUser: user,
+                role_admin: user.roles.includes("ADMIN") || user.roles.includes("admin"),
+            });
+        }
+    }
+    
+    getProviderById(id: string) {
+        if (typeof id === 'undefined' || id.length === 0) {
+            return;
+        }
+        ResourceProviderDataService.findById(id)
+            .then((response: any) => {
+                console.log(response.data)
+                this.setState({
+                    resourceProvider: response.data
+                })
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
     }
 
     newResourceProvider() {
@@ -51,23 +90,11 @@ export default class AddResource extends Component<Props, State> {
         });
     }
 
-    /*onChangeResourceProvider(e: ChangeEvent<HTMLInputElement>) {
-        this.setState({
-            resourceProvider: [+e.target.value],
-        });
-    }
-    OnChangeReservations(e: ChangeEvent<HTMLInputElement>) {
-        this.setState({
-            reservation: [+e.target.value],
-        });
-    }*/
-
     saveResource() {
         const data: IResourceModel = {
             name: this.state.name,
             description: this.state.description,
             resourceProvider: this.state.resourceProvider,
-            //reservation: this.state.reservation
         };
 
         ResourceDataService.create(data)
@@ -77,7 +104,6 @@ export default class AddResource extends Component<Props, State> {
                     name: response.data.name,
                     description: response.data.description,
                     resourceProvider: response.data.resourceProvider,
-                    //reservation: response.data.reservation,
                     submitted: true
                 });
                 console.log(response.data + "created.");
@@ -93,16 +119,16 @@ export default class AddResource extends Component<Props, State> {
             name: "",
             description: "",
             resourceProvider: this.newResourceProvider(),
-            //reservation: -1,
             submitted: false
         });
     }
 
     render() {
-        const { submitted, name,  description } = this.state;
+        const { submitted, name, description, currentUser, role_admin } = this.state;
 
         return (
             <div className="submit-form">
+                <h4>Új erőforrás felvétele</h4>
                 {submitted ? (
                     <div>
                         <h4>A foglalható erőforrás sikeresen mentésre került.</h4>
@@ -119,6 +145,7 @@ export default class AddResource extends Component<Props, State> {
                                 className="form-control"
                                 id="name"
                                 required
+                                disabled={!(currentUser && role_admin)}
                                 value={name}
                                 onChange={this.onChangeName}
                                 name="name"
@@ -131,19 +158,24 @@ export default class AddResource extends Component<Props, State> {
                                 className="form-control"
                                 id="description"
                                 required
+                                disabled={!(currentUser && role_admin)}
                                 value={description}
                                 onChange={this.onChangeDescription}
                                 name="description"
                             />
                         </div>
-
-
-                        <button onClick={this.saveResource} className="btn btn-success">
+                        {(currentUser && role_admin) ? (
+                            <button onClick={this.saveResource} className="mt-3 btn btn-success">
                             Mentés
                         </button>
+                        ) : (
+                            <div className="m-3">Új erőforrás felvételéhez admin jogosultságú bejelentkezés szükséges!</div>
+                        )}
                     </div>
                 )}
             </div>
         );
     }
 }
+
+export default withRouter(AddResource);

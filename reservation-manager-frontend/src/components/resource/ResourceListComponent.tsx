@@ -76,7 +76,7 @@ class ResourceList extends Component<Props, State>{
     }
 
     getProviderById(id: string) {
-        if (typeof id === 'undefined' || id.length === 0) {  // ha nincs id, akkor az összes providert meg kell jeleníteni
+        if (typeof id === 'undefined' || id.length === 0) {  // ha nincs id, akkor az összes resource-ot meg kell jeleníteni
             return;
         }
         ResourceProviderDataService.findById(id)
@@ -92,16 +92,30 @@ class ResourceList extends Component<Props, State>{
     }
 
     retrieveResources() {
-        ResourceDataService.getAll()        // TODO: nem az összes kell (csak ha ninsc provider.id), hanem az adott provider resource-ai
-            .then((response: any) => {
-                this.setState({
-                    resources: response.data
+        // ha nincs provider, akkor minden resource kell, egyébként csak az adott providerhez tartozók
+        if (!this.props.match.params.id) {
+            ResourceDataService.getAll()        // TODO: nem az összes kell (csak ha ninsc provider.id), hanem az adott provider resource-ai
+                .then((response: any) => {
+                    this.setState({
+                        resources: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch((e: Error) => {
+                    console.log(e);
                 });
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+        } else {
+            ResourceDataService.findByProviderId(this.props.match.params.id)
+                .then((response: any) => {
+                    this.setState({
+                        resources: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                })
+        }
     }
 
     refreshList() {
@@ -183,7 +197,13 @@ class ResourceList extends Component<Props, State>{
                     ) : (
                         <h4>{this.state.provider.name} erőforrásai </h4>
                     )}
-
+                    {currentUser && role_admin && (
+                        <Link
+                            to={"/resources/new/" + this.props.match.params.id}
+                            className="m-3 btn btn-sm btn-primary">
+                            Új erőforrás felvétele
+                        </Link>
+                    )}
                     <ul className="list-group">
                         {resources &&
                             resources.map((resourceProvider: IResourceModel, index: number) => (
@@ -208,11 +228,17 @@ class ResourceList extends Component<Props, State>{
                             <h4>Erőforrás adatai:</h4>
                             <div>
                                 <label>
+                                    <strong>Szolgáltató:</strong>
+                                </label>{" "}
+                                {currentResource.resourceProvider.name}
+                            </div>
+                            <div>
+                                <label>
                                     <strong>Név:</strong>
                                 </label>{" "}
                                 {currentResource.name}
                             </div>
-                            <div>
+                            <div className="mb-3">
                                 <label>
                                     <strong>Leírás:</strong>
                                 </label>{" "}
@@ -225,11 +251,23 @@ class ResourceList extends Component<Props, State>{
                                     Módosít
                                 </Link>
                             )}
-                            <Link
-                                to={"/reservations/resource/" + currentResource.id}
-                                className="m-3 btn btn-sm btn-success">
-                                Foglalás
-                            </Link>
+                            {(currentUser && role_admin) ? (
+                                <div>
+                                    <Link
+                                        to={"/resources/" + currentResource.id}
+                                        className="btn btn-sm btn-warning">
+                                        Módosít
+                                    </Link>
+                                    <Link
+                                        to={"/reservations/resource/" + currentResource.id}
+                                        className="m-3 btn btn-sm btn-success">
+                                        Foglalás
+                                    </Link>
+                                </div>
+                            ) : (
+                                <span className="redText"><strong>Jelentkezz be foglalás leadásához!</strong></span>
+                            )}
+
                         </div>
                     ) : (
                         <div>
