@@ -244,13 +244,6 @@ class ResourceList extends Component<Props, State>{
                                 </label>{" "}
                                 {currentResource.description}
                             </div>
-                            {currentUser && role_admin && (
-                                <Link
-                                    to={"/resources/" + currentResource.id}
-                                    className="btn btn-sm btn-warning">
-                                    Módosít
-                                </Link>
-                            )}
                             {(currentUser && role_admin) ? (
                                 <div>
                                     <Link

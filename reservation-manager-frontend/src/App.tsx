@@ -129,6 +129,9 @@ class App extends Component<Props, State> {
 										<Link to={"/register"} className="nav-link">
 											Regisztrálás
 										</Link>
+										<Link to={"/test"} className='nav-link'>
+											Teszt
+										</Link>
 									</li>
 								</div>
 							)}
