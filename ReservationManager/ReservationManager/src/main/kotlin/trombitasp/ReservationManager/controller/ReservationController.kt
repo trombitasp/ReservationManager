@@ -2,6 +2,7 @@ package trombitasp.ReservationManager.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import trombitasp.ReservationManager.model.Reservation
 import trombitasp.ReservationManager.repository.ReservationRepository
@@ -24,6 +25,7 @@ class ReservationController(private val reservationRepository: ReservationReposi
     fun findAllUserByName(@PathVariable id: String) = reservationRepository.findAllByUserId(id)
 
     @PostMapping("/reservations")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('LOGGED_IN')")
     fun saveReservation(@RequestBody reservation: Reservation) = reservationRepository.save(reservation)
 
     @PutMapping("/reservations/{id}")

@@ -46,6 +46,7 @@ class AuthTokenFilter(
         } catch (e: Exception) {
             Companion.logger.error("Cannot set user authentication: {}", e)
         }
+
         filterChain.doFilter(request, response)
     }
 
