@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import trombitasp.ReservationManager.model.Reservation
 
 
-interface ReservationRepository: JpaRepository<Reservation, Int> {
-    val em: EntityManager
+interface ReservationRepository: JpaRepository<Reservation, Int>, ReservationRepositoryCustom {
+    //fun findAllByUserId(id: String): List<Reservation>
+
+    /*val em: EntityManager
     fun findAllByUserId(id: String): List<Reservation> {
         println("CRITERIA API REPO QUERY")
 
@@ -19,5 +21,5 @@ interface ReservationRepository: JpaRepository<Reservation, Int> {
         cq.where(reservationPredicate)
         val query = em.createQuery<Reservation>(cq)
         return query.resultList
-    }
+    }*/
 }

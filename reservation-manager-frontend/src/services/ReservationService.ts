@@ -3,14 +3,15 @@ import IReservationModel from "../models/ReservationModel"
 
 class ReservationDataService {
 	getAll() {
-		return http.get<Array<IReservationModel>>("/reservations");
+		return http.get<Array<IReservationModel>>("/reservations/ / ");
 	}
 
 	findById(id: string) {
-		return http.get<IReservationModel>(`/reservations/${id}`);
+		return http.get<IReservationModel>(`/reservations/${id}/ `);
 	}
 
 	findByUserId(userId: string) {
+		return http.get<Array<IReservationModel>>(`/reservations/ /${userId}`);
 		return http.get<Array<IReservationModel>>(`/reservations/byuser/${userId}`);
 	}
 

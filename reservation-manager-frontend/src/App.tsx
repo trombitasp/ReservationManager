@@ -85,7 +85,7 @@ class App extends Component<Props, State> {
 								</li>
 								{currentUser && (
 									<li className="nav-item">
-										<Link to={"/reservations/user/1"} className="nav-link">
+										<Link to={"/reservations/user/" + currentUser.id} className="nav-link">
 											Korábbi foglalásaid
 										</Link>
 									</li>
@@ -128,9 +128,6 @@ class App extends Component<Props, State> {
 									<li className="nav-item">
 										<Link to={"/register"} className="nav-link">
 											Regisztrálás
-										</Link>
-										<Link to={"/test"} className='nav-link'>
-											Teszt
 										</Link>
 									</li>
 								</div>
