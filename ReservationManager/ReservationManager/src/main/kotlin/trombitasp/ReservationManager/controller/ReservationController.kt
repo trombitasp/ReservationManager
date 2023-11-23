@@ -14,12 +14,12 @@ class ReservationController(private val reservationRepository: ReservationReposi
     @GetMapping("/reservations")
     fun findAllReservation() = reservationRepository.findAll()
 
-    @GetMapping("/reservations/{id}/{uid}")
+    /*@GetMapping("/reservations/{id}/{uid}")
     fun findReservationById(@PathVariable id: Int, @PathVariable uid: String): ResponseEntity<Reservation> {
         return reservationRepository.findById(id).map { r ->
             ResponseEntity.ok(r)
         }.orElse(ResponseEntity.notFound().build())
-    }
+    }*/
 
     /*@GetMapping("/reservations/byuser/{uid}")
     fun findAllUserByName(@PathVariable uid: String) = reservationRepository.findAllByUserId(uid)*/
