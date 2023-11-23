@@ -12,11 +12,11 @@ class UserDataService {
 	}
 
 	findByName(name: string) {
-		return http.get<Array<IUserModel>>(`/users/byname/${name}`);
+		return http.get<Array<IUserModel>>(`/users/${name}/ /`);
 	}
 
 	findByRole(role: string) {
-		return http.get<Array<IUserModel>>(`/users/byrole/${role}`);
+		return http.get<Array<IUserModel>>(`/users/ /${role}/`);
 	}
 
 	create(data: IUserModel) {

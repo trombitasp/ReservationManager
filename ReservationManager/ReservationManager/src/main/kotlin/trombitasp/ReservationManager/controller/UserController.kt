@@ -24,8 +24,8 @@ class UserController(private val userRepository: UserRepository) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @GetMapping("/users/byname/{name}")
-    fun findAllUserByName(@PathVariable name: String) = userRepository.findAllByUsernameContaining(name)
+    @GetMapping("/users/{name}/{role}/")
+    fun findAllUserByName(@PathVariable name: String, @PathVariable role: String) = userRepository.findAll(name, role)
 
 //    @GetMapping("/users/byrole/{role}")
 //    fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)

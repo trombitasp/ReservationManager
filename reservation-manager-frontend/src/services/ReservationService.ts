@@ -12,7 +12,6 @@ class ReservationDataService {
 
 	findByUserId(userId: string) {
 		return http.get<Array<IReservationModel>>(`/reservations/ /${userId}/`);
-		return http.get<Array<IReservationModel>>(`/reservations/byuser/${userId}`);
 	}
 
 	create(data: IReservationModel) {

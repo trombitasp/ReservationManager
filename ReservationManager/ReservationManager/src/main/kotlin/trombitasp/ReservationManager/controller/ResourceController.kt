@@ -20,15 +20,16 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @GetMapping("/resources/byname/{name}")
-    fun findAllResourceByName(@PathVariable name: String) = resourceRepository.findAllByNameContaining(name)
+    @GetMapping("/resources/{name}/{providerId}/{description}/")
+    fun findAllResourceByName(@PathVariable name: String, @PathVariable providerId: String, @PathVariable description: String) =
+        resourceRepository.findAll(name, description, providerId)
 
-    @GetMapping("/resources/byprovider/{id}")
+    /*@GetMapping("/resources/byprovider/{id}")
     fun findAllResourceByProvider(@PathVariable id: String) = resourceRepository.findAllByResourceProviderId(id)
 
     @GetMapping("/resources/bydescription/{description}")
     fun findAllResourceByDescription(@PathVariable description: String) = resourceRepository.findAllByDescriptionContaining(description)
-
+*/
     @PostMapping("/resources")
     fun saveResource(@RequestBody resource: Resource) = resourceRepository.save(resource)
 
