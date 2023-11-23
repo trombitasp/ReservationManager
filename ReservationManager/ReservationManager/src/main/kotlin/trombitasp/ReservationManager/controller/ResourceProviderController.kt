@@ -21,13 +21,12 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @GetMapping("/resourceproviders/{name}/{description}")
-    fun findAllResourceProviderByName(@PathVariable name: String, @PathVariable description: String) =
-        resourceProviderRepository.findAll(name, description)
+    @GetMapping("/resourceproviders/byname/{name}")
+    fun findAllResourceProviderByName(@PathVariable name: String) = resourceProviderRepository.findAllByNameContaining(name)
 
-    /*@GetMapping("/resourceproviders/bydescription/{description}")
+    @GetMapping("/resourceproviders/bydescription/{description}")
     fun findAllResourceProviderByDescription(@PathVariable description: String) =
-        resourceProviderRepository.findAllByDescriptionContaining(description)*/
+        resourceProviderRepository.findAllByDescriptionContaining(description)
 
     @PostMapping("/resourceproviders")
     @PreAuthorize("hasAuthority('ADMIN')")
