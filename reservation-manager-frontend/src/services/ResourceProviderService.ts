@@ -13,11 +13,11 @@ class ResourceProviderDataService {
 	}
 
 	findByName(name: string) {
-		return http.get<Array<IResourceProviderModel>>(`/resourceproviders/${name}/ `);
+		return http.get<Array<IResourceProviderModel>>(`/resourceproviders/${name}/ /`);
 	}
 
 	findByDescription(description: string) {
-		return http.get<Array<IResourceProviderModel>>(`/resourceproviders/ /${description}`);
+		return http.get<Array<IResourceProviderModel>>(`/resourceproviders/e/${description}`);
 	}
 
 	create(data: IResourceProviderModel) {

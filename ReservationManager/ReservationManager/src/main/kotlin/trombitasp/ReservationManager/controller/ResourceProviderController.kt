@@ -21,7 +21,7 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
         }.orElse(ResponseEntity.notFound().build())
     }
 
-    @GetMapping("/resourceproviders/{name}/{description}")
+    @GetMapping("/resourceproviders/{name}/{description}/")
     fun findAllResourceProviderByName(@PathVariable name: String, @PathVariable description: String) =
         resourceProviderRepository.findAll(name, description)
 

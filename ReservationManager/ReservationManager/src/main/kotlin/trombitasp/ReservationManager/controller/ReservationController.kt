@@ -23,7 +23,7 @@ class ReservationController(private val reservationRepository: ReservationReposi
 
     /*@GetMapping("/reservations/byuser/{uid}")
     fun findAllUserByName(@PathVariable uid: String) = reservationRepository.findAllByUserId(uid)*/
-    @GetMapping("/reservations/{id}/{uid}")
+    @GetMapping("/reservations/{id}/{uid}/")
     fun findAllUserByName2(@PathVariable id: String, @PathVariable uid: String) = reservationRepository.findAll(uid, id)
 
     @PostMapping("/reservations")
