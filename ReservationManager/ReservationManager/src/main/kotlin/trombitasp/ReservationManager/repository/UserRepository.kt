@@ -5,7 +5,7 @@ import trombitasp.ReservationManager.model.User
 import java.util.*
 
 interface UserRepository : JpaRepository<User, Int>, UserRepositoryCustom {
-    /*
+
     fun findAllByUsernameContaining(name: String): List<User>
 
     fun findByUsername(username: String?): User?
@@ -13,5 +13,5 @@ interface UserRepository : JpaRepository<User, Int>, UserRepositoryCustom {
     fun existsByUsername(username: String?): Boolean
 
     fun existsByEmail(email: String?): Boolean
-*/
+
 }
