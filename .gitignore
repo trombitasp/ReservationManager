@@ -39,3 +39,4 @@ out/
 
 ### ignore application properties (contains highly sensitive information like email app key, email address etc.) ###
 ReservationManager/ReservationManager/src/main/resources/application.properties
+ReservationManager/ReservationManager/src/main/resources/application.properties
