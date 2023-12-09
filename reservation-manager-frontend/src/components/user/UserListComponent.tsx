@@ -104,88 +104,91 @@ export default class TutorialsList extends Component<Props, State>{
 
 	render() {
 		const { searchName, users, currentUser, currentIndex } = this.state;
-
-		return (
-			<div className="list row">
-				<div className="col-md-8">
-					<div className="input-group mb-3">
-						<input
-							type="text"
-							className="form-control"
-							placeholder="Keresés név alapján"
-							value={searchName}
-							onBlur={this.searchName}
-							onChange={this.onChangeSearchName}
-						/>
-						<div className="input-group-append mx-3">
-							<button
-								className="btn btn-outline-secondary"
-								type="button"
-								onClick={this.searchName} >
-								Keresés
-							</button>
+		if (currentUser && (currentUser.roles.includes("ADMIN") ||currentUser.roles.includes("admin") || currentUser.roles.includes("Admin"))) {
+			return (
+				<div className="list row">
+					<div className="col-md-8">
+						<div className="input-group mb-3">
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Keresés név alapján"
+								value={searchName}
+								onBlur={this.searchName}
+								onChange={this.onChangeSearchName}
+							/>
+							<div className="input-group-append mx-3">
+								<button
+									className="btn btn-outline-secondary"
+									type="button"
+									onClick={this.searchName} >
+									Keresés
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className="col-md-6">
-					<h4>Felhasználók listája</h4>
-
-					<ul className="list-group">
-						{users &&
-							users.map((user: IUserModel, index: number) => (
-								<li
-									className={"list-group-item " + (index === currentIndex ? "active" : "")}
-									onClick={() => this.setCurrentUser(user, index)}
-									key={index}
-								>
-									{user.username}
-								</li>
-							))}
-					</ul>
-
-					<button
-						className="m-3 btn btn-sm btn-danger"
-						onClick={this.removeAllTutorials} >
-						Összes felhasználó törlése
-					</button>
-				</div>
-				<div className="col-md-6">
-					{currentUser ? (
-						<div>
-							<h4>Felhasználó adatai:</h4>
+					<div className="col-md-6">
+						<h4>Felhasználók listája</h4>
+	
+						<ul className="list-group">
+							{users &&
+								users.map((user: IUserModel, index: number) => (
+									<li
+										className={"list-group-item " + (index === currentIndex ? "active" : "")}
+										onClick={() => this.setCurrentUser(user, index)}
+										key={index}
+									>
+										{user.username}
+									</li>
+								))}
+						</ul>
+	
+						<button
+							className="m-3 btn btn-sm btn-danger"
+							onClick={this.removeAllTutorials} >
+							Összes felhasználó törlése
+						</button>
+					</div>
+					<div className="col-md-6">
+						{currentUser ? (
 							<div>
-								<label>
-									<strong>Név:</strong>
-								</label>{" "}
-								{currentUser.username}
+								<h4>Felhasználó adatai:</h4>
+								<div>
+									<label>
+										<strong>Név:</strong>
+									</label>{" "}
+									{currentUser.username}
+								</div>
+								<div>
+									<label>
+										<strong>Felhasználói jog:</strong>
+									</label>{" "}
+									{currentUser.roles}
+								</div>
+								<div>
+									<label>
+										<strong>Korábbi foglalások:</strong>
+									</label>{" "}
+									{"azok a foglalások, amiknek usere ez > 0" ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
+								</div>
+	
+								<Link
+									to={"/users/" + currentUser.id}
+									className="m-3 btn btn-sm btn-warning">
+									Módosít
+								</Link>
 							</div>
+						) : (
 							<div>
-								<label>
-									<strong>Felhasználói jog:</strong>
-								</label>{" "}
-								{currentUser.roles}
+								<br />
+								<p>Kattints az egyik felhasználóra a listából!</p>
 							</div>
-							<div>
-								<label>
-									<strong>Korábbi foglalások:</strong>
-								</label>{" "}
-								{"azok a foglalások, amiknek usere ez > 0" ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
-							</div>
-
-							<Link
-								to={"/users/" + currentUser.id}
-								className="m-3 btn btn-sm btn-warning">
-								Módosít
-							</Link>
-						</div>
-					) : (
-						<div>
-							<br />
-							<p>Kattints az egyik felhasználóra a listából!</p>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
-			</div>
-		);
+			);
+		} else {
+			return <div> Nincs jogosultságod az oldal megtekintéséhez.</div>
+		}
 	}
 }
