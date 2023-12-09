@@ -2,6 +2,7 @@ package trombitasp.ReservationManager.model
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
@@ -31,6 +32,12 @@ data class ResourceProvider (
     @NotBlank
     @Column(name = "description")
     var description: String = "",
+
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    @Column(name = "email")
+    var email: String? = null
 
     /*@JsonManagedReference
     @OneToMany(mappedBy = "resourceProvider")
