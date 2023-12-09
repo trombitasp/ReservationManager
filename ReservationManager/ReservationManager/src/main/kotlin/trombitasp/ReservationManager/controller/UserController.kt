@@ -27,12 +27,6 @@ class UserController(private val userRepository: UserRepository) {
     @GetMapping("/users/{name}/{role}/")
     fun findAllUserByName(@PathVariable name: String, @PathVariable role: String) = userRepository.findAll(name, role)
 
-//    @GetMapping("/users/byrole/{role}")
-//    fun findAllUserByRole(@PathVariable role: String) = userRepository.findAllByRole(role)
-
-//    @PostMapping("/users")
-//    fun saveUser(@RequestBody user: User) = userRepository.save(user)
-
     @PutMapping("/users/{id}")
     @PreAuthorize("hasAuthority('LOGGED_IN') or hasAuthority('ADMIN')")
     fun updateUser(@PathVariable id: Int, @RequestBody user: User, authentication: Authentication): ResponseEntity<User> {

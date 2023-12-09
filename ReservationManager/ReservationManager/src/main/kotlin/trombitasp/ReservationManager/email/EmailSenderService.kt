@@ -16,7 +16,7 @@ class EmailSenderService(
         message.setTo(toEmail);
         message.setSubject(subject);
         message.setText(body);
-        mailSender!!.send(message);
-        println("email sent")
+        mailSender.send(message);
+        println("email sent to " + toEmail)
     }
 }
