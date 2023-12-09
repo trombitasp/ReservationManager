@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logo from "../../logo.svg"
 import AuthService from "../../services/auth/AuthService";
 
 type Props = {};

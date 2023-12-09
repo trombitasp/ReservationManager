@@ -2,7 +2,6 @@ import { Component, ChangeEvent } from "react";
 import ResourceProviderDataService from "../../services/ResourceProviderService";
 import { Link, Route, Routes } from "react-router-dom";
 import IResourceProviderModel from '../../models/ResourceProviderModel';
-import ResourceList from "../resource/ResourceListComponent";
 import IUserModel from "../../models/UserModel";
 import AuthService from "../../services/auth/AuthService";
 

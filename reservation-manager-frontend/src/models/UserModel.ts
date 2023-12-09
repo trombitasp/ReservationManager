@@ -1,5 +1,3 @@
-import IReservationModel from "./ReservationModel";
-
 export default interface IUserModel {
     id?: number | null,
     username: string,

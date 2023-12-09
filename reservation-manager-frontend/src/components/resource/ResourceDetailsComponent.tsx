@@ -2,7 +2,6 @@ import { Component, ChangeEvent } from "react";
 import { withRouter, WithRouterProps } from "../../util/withRouter";
 
 import ResourceDataService from "../../services/ResourceService";
-import ResourceProviderDataService from "../../services/ResourceProviderService";
 import IResourceModel from "../../models/ResourceModel";
 import IResourceProviderModel from "../../models/ResourceProviderModel";
 import IUserModel from "../../models/UserModel";
