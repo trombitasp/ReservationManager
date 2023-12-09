@@ -151,7 +151,7 @@ export default class ResourceProviderList extends Component<Props, State>{
                     {currentUser && role_admin && (
                         <Link
                             to={"/resourceproviders/new"}
-                            className="m-3 btn btn-sm btn-primary">
+                            className="m-3 btn btn-sm btn-outline-primary">
                             Új szolgáltató felvétele
                         </Link>
                     )}
@@ -167,7 +167,7 @@ export default class ResourceProviderList extends Component<Props, State>{
                     </ul>
                     {role_admin && currentUser && (
                         <button
-                            className="m-3 btn btn-sm btn-danger"
+                            className="m-3 btn btn-sm btn-outline-danger"
                             onClick={this.removeAllTutorials} >
                             Összes szolgáltató törlése
                         </button>
@@ -205,13 +205,13 @@ export default class ResourceProviderList extends Component<Props, State>{
                             {currentUser && role_admin && (
                                 <Link
                                     to={"/resourceproviders/" + currentProvider.id}
-                                    className="btn btn-sm btn-warning">
+                                    className="btn btn-sm btn-outline-warning">
                                     Módosít
                                 </Link>
                             )}
                             <Link
                                 to={"/resources/provider/" + currentProvider.id}
-                                className="m-3 btn btn-sm btn-success">
+                                className="m-3 btn btn-sm btn-outline-success">
                                 Erőforrások
                             </Link>
                         </div>

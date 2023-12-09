@@ -199,7 +199,7 @@ class ReservationList extends Component<Props, State>{
                     </ul>
                     {currentUser && (role_admin || role_logged_in) && (
                         <button
-                            className="m-3 btn btn-sm btn-danger"
+                            className="m-3 btn btn-sm btn-outline-danger"
                             onClick={this.removeAllTutorials} >
                             Összes foglalási előzmény törlése
                         </button>

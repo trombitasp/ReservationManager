@@ -132,7 +132,7 @@ class AddResource extends Component<Props, State> {
                 {submitted ? (
                     <div>
                         <h4>A foglalható erőforrás sikeresen mentésre került.</h4>
-                        <button className="btn btn-success" onClick={this.newResource}>
+                        <button className="btn btn-outline-success" onClick={this.newResource}>
                             Új erőforrás felvétele
                         </button>
                     </div>
@@ -165,7 +165,7 @@ class AddResource extends Component<Props, State> {
                             />
                         </div>
                         {(currentUser && role_admin) ? (
-                            <button onClick={this.saveResource} className="mt-3 btn btn-success">
+                            <button onClick={this.saveResource} className="mt-3 btn btn-outline-success">
                             Mentés
                         </button>
                         ) : (

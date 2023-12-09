@@ -206,7 +206,7 @@ class AddReservation extends Component<Props, State> {
                 {submitted ? (
                     <div>
                         <h4>A foglalás sikeresen mentésre került.</h4>
-                        <button className="btn btn-success" onClick={this.newReservation}>
+                        <button className="btn btn-outline-success" onClick={this.newReservation}>
                             Új foglalás felvétele
                         </button>
                     </div>
@@ -255,11 +255,11 @@ class AddReservation extends Component<Props, State> {
                         </div>
                         {(currentUser && (role_admin || role_logged_in)) ? (
                             <div className="d-flex justify-content-center">
-                                <button onClick={this.saveReservation} className="m-3 btn btn-sm btn-success">
+                                <button onClick={this.saveReservation} className="m-3 btn btn-sm btn-outline-success">
                                     Mentés
                                 </button>
                                 <button
-                                    className="m-3 btn btn-sm btn-secondary"
+                                    className="m-3 btn btn-sm btn-outline-secondary"
                                     onClick={this.props.history.back}>
                                     Mégsem
                                 </button>
@@ -268,7 +268,7 @@ class AddReservation extends Component<Props, State> {
                             <div>
                                 Jelentkezz be további funkciókért!
                                 <button
-                                    className="m-3 btn btn-sm btn-secondary"
+                                    className="m-3 btn btn-sm btn-outline-secondary"
                                     onClick={this.props.history.back}>
                                     Mégsem
                                 </button>

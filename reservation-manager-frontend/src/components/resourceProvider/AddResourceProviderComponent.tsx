@@ -132,7 +132,7 @@ export default class AddResourceProvider extends Component<Props, State> {
                 {submitted ? (
                     <div>
                         <h4>A szolgáltató sikeresen mentésre került.</h4>
-                        <button className="btn btn-success" onClick={this.newResourceProvider}>
+                        <button className="btn btn-outline-success" onClick={this.newResourceProvider}>
                             Új szolgáltató felvétele
                         </button>
                     </div>
@@ -191,7 +191,7 @@ export default class AddResourceProvider extends Component<Props, State> {
                             />
                         </div>
                         {(currentUser && role_admin) ? (
-                            <button onClick={this.saveResourceProvider} className="btn btn-success">
+                            <button onClick={this.saveResourceProvider} className="btn btn-outline-success">
                                 Mentés
                             </button>
                         ) : (

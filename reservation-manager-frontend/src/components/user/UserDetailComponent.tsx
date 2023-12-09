@@ -172,17 +172,17 @@ class UserDetails extends Component<Props, State> {
                         )*/}
                         <button
                             type="submit"
-                            className="m-3 btn btn-sm btn-success"
+                            className="m-3 btn btn-sm btn-outline-success"
                             onClick={this.updateUser}>
                             Mentés
                         </button>
                         <button
-                            className="m-3 btn btn-sm btn-danger"
+                            className="m-3 btn btn-sm btn-outline-danger"
                             onClick={this.deleteUser}>
                             Törlés
                         </button>
                         <button
-                            className="m-3 btn btn-sm btn-secondary"
+                            className="m-3 btn btn-sm btn-outline-secondary"
                             onClick={this.props.history.back}>
                             Mégsem
                         </button>

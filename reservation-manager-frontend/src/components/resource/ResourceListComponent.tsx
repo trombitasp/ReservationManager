@@ -200,7 +200,7 @@ class ResourceList extends Component<Props, State>{
                     {currentUser && role_admin && (
                         <Link
                             to={"/resources/new/" + this.props.match.params.id}
-                            className="m-3 btn btn-sm btn-primary">
+                            className="m-3 btn btn-sm btn-outline-primary">
                             Új erőforrás felvétele
                         </Link>
                     )}
@@ -216,7 +216,7 @@ class ResourceList extends Component<Props, State>{
                     </ul>
                     {currentUser && role_admin && (
                         <button
-                            className="m-3 btn btn-sm btn-danger"
+                            className="m-3 btn btn-sm btn-outline-danger"
                             onClick={this.removeAllTutorials} >
                             Összes erőforrás törlése
                         </button>
@@ -248,12 +248,12 @@ class ResourceList extends Component<Props, State>{
                                 <div>
                                     <Link
                                         to={"/resources/" + currentResource.id}
-                                        className="btn btn-sm btn-warning">
+                                        className="btn btn-sm btn-outline-warning">
                                         Módosít
                                     </Link>
                                     <Link
                                         to={"/reservations/resource/" + currentResource.id}
-                                        className="m-3 btn btn-sm btn-success">
+                                        className="m-3 btn btn-sm btn-outline-success">
                                         Foglalás
                                     </Link>
                                 </div>

@@ -144,7 +144,7 @@ export default class TutorialsList extends Component<Props, State>{
 						</ul>
 	
 						<button
-							className="m-3 btn btn-sm btn-danger"
+							className="m-3 btn btn-sm btn-outline-danger"
 							onClick={this.removeAllTutorials} >
 							Összes felhasználó törlése
 						</button>
@@ -174,7 +174,7 @@ export default class TutorialsList extends Component<Props, State>{
 	
 								<Link
 									to={"/users/" + currentUser.id}
-									className="m-3 btn btn-sm btn-warning">
+									className="m-3 btn btn-sm btn-outline-warning">
 									Módosít
 								</Link>
 							</div>

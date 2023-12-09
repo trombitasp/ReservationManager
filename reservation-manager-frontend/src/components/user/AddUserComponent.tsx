@@ -93,7 +93,7 @@ export default class AddUser extends Component<Props, State> {
 			{submitted ? (
 			  <div>
 				<h4>A felhasználó sikeresen mentésre került.</h4>
-				<button className="btn btn-success" onClick={this.newUser}>
+				<button className="btn btn-outline-success" onClick={this.newUser}>
 					Új felhasználó felvétele
 				</button>
 			  </div>
@@ -124,7 +124,7 @@ export default class AddUser extends Component<Props, State> {
 				  />
 				</div>
 	
-				<button onClick={this.saveUser} className="btn btn-success">
+				<button onClick={this.saveUser} className="btn btn-outline-success">
 				  Mentés
 				</button>
 			  </div>
