@@ -24,9 +24,9 @@ data class Resource (
     @Column(name = "description")
     var description: String,
 
-    //@JsonBackReference          // TODO: Nem okoz ez problémát, hogy nem kerül szerializálásra ez a property?
+
     @ManyToOne
     @JoinColumn(name = "resourceProvider_id")
     var resourceProvider: ResourceProvider,
-    
+
 ) {}
