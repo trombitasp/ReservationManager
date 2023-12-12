@@ -28,9 +28,5 @@ data class Resource (
     @ManyToOne
     @JoinColumn(name = "resourceProvider_id")
     var resourceProvider: ResourceProvider,
-
-    /*@JsonManagedReference
-    @OneToOne(mappedBy = "resource")
-    var reservation: Reservation,*/
-    //var imageId: Int,
+    
 ) {}
