@@ -14,7 +14,6 @@ class ResourceRepositoryImpl: ResourceRepositoryCustom {
     @PersistenceContext
     var em: EntityManager? = null
     override fun findAll(name: String?, description: String?, resourceProviderId: String?): List<Resource> {
-        println("CRITERIA RESOURCE")
         val cb = em!!.criteriaBuilder
         val cq = cb.createQuery(Resource::class.java)
         val resource = cq.from(Resource::class.java)
