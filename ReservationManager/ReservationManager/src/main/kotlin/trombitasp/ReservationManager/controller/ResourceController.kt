@@ -23,7 +23,7 @@ class ResourceController(private val resourceRepository: ResourceRepository) {
     @GetMapping("/resources/{name}/{providerId}/{description}/")
     fun findAllResourceByName(@PathVariable name: String, @PathVariable providerId: String, @PathVariable description: String) =
         resourceRepository.findAll(name, description, providerId)
-    
+
     @PostMapping("/resources")
     fun saveResource(@RequestBody resource: Resource) = resourceRepository.save(resource)
 
