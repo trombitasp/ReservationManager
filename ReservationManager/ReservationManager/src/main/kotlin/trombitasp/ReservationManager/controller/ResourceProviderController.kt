@@ -25,9 +25,6 @@ class ResourceProviderController(private val resourceProviderRepository: Resourc
     fun findAllResourceProviderByName(@PathVariable name: String, @PathVariable description: String) =
         resourceProviderRepository.findAll(name, description)
 
-    /*@GetMapping("/resourceproviders/bydescription/{description}")
-    fun findAllResourceProviderByDescription(@PathVariable description: String) =
-        resourceProviderRepository.findAllByDescriptionContaining(description)*/
 
     @PostMapping("/resourceproviders")
     @PreAuthorize("hasAuthority('ADMIN')")
