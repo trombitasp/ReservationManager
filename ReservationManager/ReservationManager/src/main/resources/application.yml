@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: 'com.mysql.cj.jdbc.Driver'
+    hikari:
+      initialization-fail-timeout: 0
+
+    url: ''
+    username: ''
+    password: ''
+
+  # # Hibernate ddl auto (create, create-drop, validate, update)
+  jpa:
+    hibernate:
+      ddl-auto: 'update'
+
+application:
+  auth:
+    allowed-issuers:
+      - '' # OVERWRITE
+    rsa-public-key: '' # OVERWRITE

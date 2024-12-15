@@ -41,6 +41,7 @@ class ResourceProviderDetails extends Component<Props, State> {
                 minReservationTime: new Date(2000, 1, 31, 1, 0, 0, 0),
                 maxReservationTime: new Date(2000, 1, 31, 23, 59, 59, 0),
                 description: "",
+                image: new Blob()
             },
             message: "",
             minHours: "00",

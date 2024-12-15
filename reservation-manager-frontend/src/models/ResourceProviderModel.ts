@@ -4,5 +4,6 @@ export default interface IResourceProviderModel {
     minReservationTime: Date,
     maxReservationTime: Date,
     description: string,
+    image: Blob
     //resources: Array<Number>        // Array<IResourceModel>, ha nem id-k kellenek
 }

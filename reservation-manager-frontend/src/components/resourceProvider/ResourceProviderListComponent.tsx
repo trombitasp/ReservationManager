@@ -16,6 +16,7 @@ type State = {
     role_admin: boolean
 };
 
+let imageSrc = "";
 export default class ResourceProviderList extends Component<Props, State>{
     constructor(props: Props) {
         super(props);
@@ -81,6 +82,10 @@ export default class ResourceProviderList extends Component<Props, State>{
         let max = new Date(resourceProvider.maxReservationTime);
         resourceProvider.maxReservationTime = max;
         resourceProvider.minReservationTime = min;
+        ResourceProviderDataService.getProviderImage(resourceProvider.id!)
+            .then(response => {
+                imageSrc = URL.createObjectURL(response.data)
+            }).catch(error => console.error('Error fetching image:', error));
         this.setState({
             currentProvider: resourceProvider,
             currentIndex: index
@@ -199,6 +204,13 @@ export default class ResourceProviderList extends Component<Props, State>{
                                     <strong>Maximális foglalási idő:</strong>
                                 </label>{" "}
                                 {`${currentProvider.maxReservationTime.getHours()} óra ${currentProvider.maxReservationTime.getMinutes()} perc ${currentProvider.maxReservationTime.getSeconds()} másodperc`}
+                            </div>
+                            <div>
+                                {currentProvider.image ? (
+                                    <img src={imageSrc} alt="Image of the provider fetched from the backend DB."></img>
+                                ) : (
+                                    <p>Loading...</p>
+                                )}
                             </div>
 
                             {currentUser && role_admin && (

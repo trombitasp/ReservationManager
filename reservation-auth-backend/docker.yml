@@ -1,0 +1,40 @@
+# This properties file is attached to the Docker container as an
+# 'application.properties' file of the backend JAR file.
+# Configure runtime properties here.
+# Further default values may be set in the 'application.yml' file
+# (found in the sources), which is bundled in the application JAR.
+
+application:
+  admins:
+    # Set list of allowed administrator credentials.
+    - username: 'admin'
+      password: '$2a$10$V.UG.7NEbPzvm0WG1EB9v.pvYOHLd7y6u.oQqPpQw.s4IdaJ4t68q'
+    - username: 'jack'
+      password: '$2a$10$NwJPnVsUvB13PZeN7XVLCe0AwEeQDSQOj4cZHMhD3DqYCBm0rL/iG'
+  # Set authentication signing and verifying parameters.
+  auth:
+    issuer: 'coordinator-auth-backend'
+    rsa-private-key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIICXAIBAAKBgQDW6DHcubta06/xEoBtiRa4l52vowTtHSg851fnZ9Yl8fU63/Je
+      M7DIgQ7PTso5V1FpCGfl/HJSDvk+HHPPGqHSKTA2oTd5t8rABp6CUsiZwBV7XYRy
+      3v+so+cp4v2jcJt0UFywDRB3DFMqgBwizG7EuWXDLNBoyeiwaGkTsc6O0QIDAQAB
+      AoGAaq5nGjAk/kh5XY2WrUlROx8givC84EwKDnm1HE1idAGxf6Ft+i9kwZO3W1e8
+      cUyUQDSJBxUTVwLR3XBYWOXaj8U3WdgZxgBqwLMHCiEFevsHfv4kXtnsFJ3Mk/Cs
+      348LCrSIvDaFPb7w6zHHfLAVZXYDog0fEHStjWohducyPrECQQDtzimCLTxX9cww
+      YEcPEM52QrPf11EdSnEW+m1ghyctpeNMxZxUxIYAR3Rrl2rZtID9pFT3fHMXY4UM
+      gE0C/FfNAkEA51mHWoxB37Y5MAGNjKqA4jOVLAR8JRHKZ2+FJE39ck1Ij2rpI5wN
+      mBd/ctJ9zNSE2Hn44muDyegWyMTgtUfHFQJASqSqnMTMKyPpCso9o7n3xGEdisZQ
+      HKyQINFMYb8qigaG+UMR1f21vgKvxVHK5TjmQDdDwEcc7Rt82Law9Z31hQJAYPMb
+      zc5JLL7oaD2+W9x39lM3iCK5A6/Y6k/Js9UbCPNqHO/ok4uqBrqSJkQfg97rbOxw
+      aDI2ID6qjagzosRZoQJBAJyfUTtq8fw5EKQC+e+BFKKKGv6ZXi3oMlV8GyZN9JnN
+      AAjwG1YPLA+YaIZ5/1g6yjHKvAu49boPZ6q+mRLcaZk=
+      -----END RSA PRIVATE KEY-----
+
+    rsa-public-key: |
+      -----BEGIN PUBLIC KEY-----
+      MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDW6DHcubta06/xEoBtiRa4l52v
+      owTtHSg851fnZ9Yl8fU63/JeM7DIgQ7PTso5V1FpCGfl/HJSDvk+HHPPGqHSKTA2
+      oTd5t8rABp6CUsiZwBV7XYRy3v+so+cp4v2jcJt0UFywDRB3DFMqgBwizG7EuWXD
+      LNBoyeiwaGkTsc6O0QIDAQAB
+      -----END PUBLIC KEY-----

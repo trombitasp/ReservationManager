@@ -100,11 +100,7 @@ class App extends Component<Props, State> {
 							</ul>
 						</div>
 						<ul className='navbar-nav d-flex'>
-							<li className="nav-item">
-								<Link to={"/users"} className="nav-link">
-									Profil adatok / Bejelentkezés
-								</Link>
-							</li>
+							
 							{currentUser ? (	// profil + logout  VAGY  login + singin
 								<div className="navbar-nav ml-auto">
 									<li className="nav-item">
