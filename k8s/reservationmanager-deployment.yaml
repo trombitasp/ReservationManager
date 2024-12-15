@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manager-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: manager-backend
+  template:
+    metadata:
+      labels:
+        app: manager-backend
+    spec:
+      containers:
+        - name: manager-backend
+          image: manager-backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "classpath:/config/application.yml"
+          args: ["--spring.config.location=config/application.yml"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: manager-backend-service
+spec:
+  selector:
+    app: manager-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

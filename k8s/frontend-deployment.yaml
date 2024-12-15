@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reservation-frontend
+  template:
+    metadata:
+      labels:
+        app: reservation-frontend
+    spec:
+      containers:
+        - name: reservation-frontend
+          image: reservation-manager-frontend:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: reservation-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

@@ -37,10 +37,14 @@ data class ResourceProvider (
     @Size(max = 50)
     @Email
     @Column(name = "email")
-    var email: String? = null
+    var email: String? = null,
 
     /*@JsonManagedReference
     @OneToMany(mappedBy = "resourceProvider")
     var resources: List<Resource>*/
     //var imageId: Int      // TODO: később esetleg képet is menteni?
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    var image: String
 ) {}

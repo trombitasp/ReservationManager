@@ -1,0 +1,6 @@
+spring:
+  jpa:
+    database:
+  h2datasource:
+    driver-class-name: 'org.h2.Driver'
+

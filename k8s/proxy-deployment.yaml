@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservation-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservation-proxy
+  template:
+    metadata:
+      labels:
+        app: reservation-proxy
+    spec:
+      containers:
+        - name: reservation-proxy
+          image: reservation-manager-proxy:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+spec:
+  selector:
+    app: reservation-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

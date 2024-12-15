@@ -3,7 +3,7 @@ package trombitasp.ReservationManager.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-//import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import trombitasp.ReservationManager.email.EmailSenderService
 import trombitasp.ReservationManager.model.Reservation
@@ -22,7 +22,7 @@ class ReservationController(private val reservationRepository: ReservationReposi
     fun findAllUserByName2(@PathVariable id: String, @PathVariable uid: String) = reservationRepository.findAll(uid, id)
 
     @PostMapping("/reservations")
-    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('LOGGED_IN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('LOGGED_IN')")
     fun saveReservation(@RequestBody reservation: Reservation) = run {
         sendEmails(reservation, EmailType.Save)
         reservationRepository.save(reservation)

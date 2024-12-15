@@ -104,7 +104,7 @@ export default class TutorialsList extends Component<Props, State>{
 
 	render() {
 		const { searchName, users, currentUser, currentIndex } = this.state;
-		if (currentUser && (currentUser.roles.includes("ADMIN") ||currentUser.roles.includes("admin") || currentUser.roles.includes("Admin"))) {
+		
 			return (
 				<div className="list row">
 					<div className="col-md-8">
@@ -169,7 +169,7 @@ export default class TutorialsList extends Component<Props, State>{
 									<label>
 										<strong>Korábbi foglalások:</strong>
 									</label>{" "}
-									{"azok a foglalások, amiknek usere ez > 0" ? "TODO adott felhasználó foglalásainek lekérése" : "Nincs foglalás."}
+									{/*"azok a foglalások, amiknek usere ez > 0" ? "TODO adott felhasználó foglalásainek lekérése" : */"Nincs foglalás."}
 								</div>
 	
 								<Link
@@ -187,8 +187,8 @@ export default class TutorialsList extends Component<Props, State>{
 					</div>
 				</div>
 			);
-		} else {
+		/*} else {
 			return <div> Nincs jogosultságod az oldal megtekintéséhez.</div>
-		}
+		}*/
 	}
 }

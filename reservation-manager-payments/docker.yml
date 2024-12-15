@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: 'jdbc:mysql://payments-db:3306/payment'
+    username: 'root'
+    password: '1234'
+
+application:
+  auth:
+    allowed-issuers:
+      - 'ReservationManager'
+    rsa-public-key: |
+      -----BEGIN PUBLIC KEY-----
+      MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDW6DHcubta06/xEoBtiRa4l52v
+      owTtHSg851fnZ9Yl8fU63/JeM7DIgQ7PTso5V1FpCGfl/HJSDvk+HHPPGqHSKTA2
+      oTd5t8rABp6CUsiZwBV7XYRy3v+so+cp4v2jcJt0UFywDRB3DFMqgBwizG7EuWXD
+      LNBoyeiwaGkTsc6O0QIDAQAB
+      -----END PUBLIC KEY-----

@@ -1,0 +1,8 @@
+application:
+  admins:
+    - username: 'admin'
+    password: '{bcrypt}$2a$10$V.UG.7NEbPzvm0WG1EB9v.pvYOHLd7y6u.oQqPpQw.s4IdaJ4t68q'
+  auth:
+    issuer: ''
+    rsa-private-key: ''
+    rsa-public-key: ''

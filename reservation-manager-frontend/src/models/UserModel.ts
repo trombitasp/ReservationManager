@@ -4,5 +4,4 @@ export default interface IUserModel {
     email: string,
     password: string,
     roles: Array<string>
-    //reservations: Array<Number>      // Array<IReservationModel>, ha nem csak id kell
 }
